@@ -1,0 +1,25 @@
+@use "variables";
+
+.orange {
+  background-color: variables.$orange;
+  color: variables.$orange;
+}
+
+.beige {
+  background-color: variables.$beige;
+  color: variables.$beige;
+}
+
+.blue {
+  background-color: variables.$blue;
+  color: variables.$blue;
+}
+
+.navy {
+  background-color: variables.$navy;
+  color: variables.$navy;
+}
+
+body {
+  background-color: variables.$beige;
+}
