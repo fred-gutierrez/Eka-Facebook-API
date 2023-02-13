@@ -10,13 +10,16 @@ interface PostsData {
   paging: {};
 }
 
+const accessToken: string =
+  "EAAKI47hCLskBAA4FqgpX7ZAgYhsSxVtvqzZBUR5eJWK5C8omA5G9HwwuyFCqZBeYpI93HYIavAL3OdwwhmZCXo6sXgJmICCqWtpusaSZBcPSeRx5M9wtZBeQP7aoqRkXXDhPeF2rzm07aboZCoVlxXho8cXHzl01kfvn1qb7Ik59B8omp2x8bb7sYPsQbHsD0IaX90R3AOrRq3K2ZCKntsZBy4LT5I4BZCKtsZD";
+
 const FacebookPosts = () => {
   const [postData, setPostData] = useState<PostsData | null>(null);
   const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
     fetch(
-      "https://graph.facebook.com/249327931806447?fields=posts{message,full_picture}&access_token=EAAKI47hCLskBAMBiPXTHBC8ZBNgcGryp5veP8wuaMiUODZAkYdxvz83gT0xdy9ZALAYJRWXT4FH6Be5eDc0ntUO8Sofed1og3Hp04eEssizeIZAdqNZCqPijLXXmYAnOBRMlUxMiSRg5LVUY27IF5C2HPzCOPtY8xdpKbnJSvqeXTZBmn4qxVeBxNgFoa7YkXKeXK1luelAbKOBh6T8RBHSGWfBFC7wIIZD"
+      `https://graph.facebook.com/249327931806447?fields=posts{message,full_picture}&access_token=${accessToken}`
     )
       .then((res) => res.json())
       .then((data) => {
