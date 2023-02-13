@@ -44,23 +44,15 @@ export default function Navbar() {
                 to="/"
                 className="block py-2 pl-3 pr-4 text-white rounded md:p-0 bg-blue-600 md:bg-transparent"
               >
-                Home
+                Inicio
               </NavLink>
             </li>
             <li>
               <NavLink
-                to="/homes"
+                to="/propiedades"
                 className="block py-2 pl-3 pr-4 rounded md:border-0 md:p-0 text-gray-400 md:hover:text-white hover:bg-gray-700 hover:text-white md:hover:bg-transparent"
               >
-                Homes
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                to="/about"
-                className="block py-2 pl-3 pr-4 rounded md:border-0 md:p-0 text-gray-400 md:hover:text-white hover:bg-gray-700 hover:text-white md:hover:bg-transparent"
-              >
-                About & Contact
+                Propiedades
               </NavLink>
             </li>
           </ul>
