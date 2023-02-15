@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 
 interface Post {
-  attachments: string;
+  attachments: string | any;
   message: string;
 }
 
 interface Attachments {
-  subattachments: string | undefined;
+  subattachments: string | any;
   data: Attachments[];
 }
 
@@ -40,8 +40,10 @@ const FacebookPosts = () => {
       .then((res) => res.json())
       .then((data) => {
         setPostData(data.posts);
-        setAttachmentsData(data.attachments);
-        setSubAttachmentsData(data.subattachments);
+        setAttachmentsData(data.posts.data[0].attachments);
+        setSubAttachmentsData(
+          data.posts.data[0].attachments.data[0].subattachments
+        );
       })
       .catch((error) => {
         setError(error);
@@ -62,15 +64,18 @@ const FacebookPosts = () => {
         postData.data.map((post: Post, index: number) => (
           <li key={index}>
             <p>{post.message}</p>
-            {attachmentsData?.data.map((attachments: Attachments) =>
-              subAttachmentsData?.data.map((subattachments: SubAttachments) => (
-                <img
-                  src={subattachments.media.image.src}
-                  width={200}
-                  alt="House Image"
-                />
-              ))
-            )}
+            {post.attachments &&
+              post.attachments.data.map((attachment: Attachments) =>
+                attachment.subattachments.data.map(
+                  (subattachment: SubAttachments) => (
+                    <img
+                      src={subattachment.media.image.src}
+                      width={200}
+                      alt="House Image"
+                    />
+                  )
+                )
+              )}
           </li>
         ))}
     </ul>
@@ -78,3 +83,5 @@ const FacebookPosts = () => {
 };
 
 export default FacebookPosts;
+
+// TODO: Clean any left over data that don't really inflict the images being displayed
