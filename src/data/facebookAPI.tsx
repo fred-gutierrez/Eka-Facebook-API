@@ -10,8 +10,10 @@ interface PostsData {
   paging: {};
 }
 
+// ! This is the fetch field = `https://graph.facebook.com/249327931806447?fields=posts{message,attachments{subattachments{media{image{src}}}}}&access_token=${accessToken}`
+
 const accessToken: string =
-  "EAAKI47hCLskBAA4FqgpX7ZAgYhsSxVtvqzZBUR5eJWK5C8omA5G9HwwuyFCqZBeYpI93HYIavAL3OdwwhmZCXo6sXgJmICCqWtpusaSZBcPSeRx5M9wtZBeQP7aoqRkXXDhPeF2rzm07aboZCoVlxXho8cXHzl01kfvn1qb7Ik59B8omp2x8bb7sYPsQbHsD0IaX90R3AOrRq3K2ZCKntsZBy4LT5I4BZCKtsZD";
+  "EAAKI47hCLskBAMBWzxORQm5csZBZCihJWgdqcJhIE9ZAxk8VcI3W9y3vaI0ZBgkhYoZCeTfSPWTvFDZBrYZC05IgnguAt6J9nW4calzq6sHOCyeaFFEZBXYyETt8ST2gn3deai5gdKbJD0DDhPjIu0eiZBX7WRJjby0AbPf7uXejT6ZBpKWpnckZCaEzkN1HZCZBViqZBZAN12WgL0Qnv6fODRIcZAsSB1yvdgRZBFe8ZD";
 
 const FacebookPosts = () => {
   const [postData, setPostData] = useState<PostsData | null>(null);
@@ -44,7 +46,7 @@ const FacebookPosts = () => {
         postData.data.map((post: Post, index: number) => (
           <li key={index}>
             <p>{post.message}</p>
-            <img src={post.full_picture} alt="" />
+            <img src={post.full_picture} width={200} alt="House Image" />
           </li>
         ))}
     </ul>

@@ -18,6 +18,7 @@ export default function Footer() {
             </h2>
             <ul className="text-gray-400">
               <li className="mb-4">
+                {" "}
                 <a
                   href={faceBookPage}
                   className="hover:underline"
@@ -39,7 +40,7 @@ export default function Footer() {
           </a>
           . Todos los derechos reservados.
         </span>
-        <div className="flex mt-4 space-x-6 sm:justify-center sm:mt-0">
+        <div className="flex my-4 space-x-6 sm:justify-center sm:my-0">
           <a
             href={faceBookPage}
             className="text-gray-500 hover:text-white"
@@ -60,6 +61,17 @@ export default function Footer() {
             <span className="sr-only">Facebook page</span>
           </a>
         </div>
+        <span className="text-gray-400 text-xs">
+          {" "}
+          Creado por{" "}
+          <a
+            target={"_blank"}
+            href="https://freddavidsolisgutierrez.netlify.app/"
+            className="text-gray-500 hover:text-white"
+          >
+            Fred David Solis Gutierrez
+          </a>
+        </span>
       </div>
     </footer>
   );
