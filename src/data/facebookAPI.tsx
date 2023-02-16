@@ -1,87 +1,62 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 
 interface Post {
-  attachments: string | any;
+  attachments: {
+    data: {
+      subattachments: {
+        data: {
+          media: {
+            image: {
+              src: string;
+            };
+          };
+        }[];
+      };
+    }[];
+  };
   message: string;
 }
 
-interface Attachments {
-  subattachments: string | any;
-  data: Attachments[];
-}
-
-interface SubAttachments {
-  media: any;
-  data: SubAttachments[];
-}
-
-interface PostsData {
-  data: Post[];
-}
-
-// ! This is the fetch field = `https://graph.facebook.com/249327931806447?fields=posts{message,attachments{subattachments{media{image{src}}}}}&access_token=${accessToken}`
-
-const accessToken: string =
-  "EAAKI47hCLskBAKGexIO4nnNMFAyDxa6smaZCZCwc0H92ZBqorJr6HvchfXyZAhZB6pZAphUMxJZAutEsIQ0mKHfeUzAb6R9puvTBWAwJZB9mTSwxtxqNV3OOF9RGwTqi8u3X3IoxjmvVucNfE7qSdjC7nT4bOUWhr82pPlv4OFTvQu7eWgXDRnzH6gdsYBs4VnSeqKNP0lySOzI12dqUXkblK2I5bnfoSL0ZD";
+const accessToken =
+  "EAAKI47hCLskBAPBLBpzAJPeX2j6tEbYLZClX1DtjEDLR2LtQGuqvfsrc7jG4IzHii8449k45tp84DNX7oUtZAIS2tPlwZBEmB94qSFjEqynv8m3BlpJszthM6aSZBMC0ky1ui474DSCGSszqQSAwUuqZAhDyNVn2FyBPFS388ZAeBZATdbqdNOZCVCYZA1NslSUCwkQELBAspXs4ZAzrS274BXYq9CazWZCvYEZD";
 
 const FacebookPosts = () => {
-  const [postData, setPostData] = useState<PostsData | null>(null);
-  const [attachmentsData, setAttachmentsData] = useState<Attachments | null>(
-    null
-  );
-  const [subAttachmentsData, setSubAttachmentsData] =
-    useState<SubAttachments | null>(null);
+  const [postData, setPostData] = useState<Post[]>([]);
   const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
     fetch(
-      `https://graph.facebook.com/249327931806447?fields=posts{message,attachments{subattachments{media{image{src}}}}}&access_token=${accessToken}`
+      `https://graph.facebook.com/me?fields=posts{message,attachments{subattachments{media{image{src}}}}}&access_token=${accessToken}`
     )
       .then((res) => res.json())
-      .then((data) => {
-        setPostData(data.posts);
-        setAttachmentsData(data.posts.data[0].attachments);
-        setSubAttachmentsData(
-          data.posts.data[0].attachments.data[0].subattachments
-        );
-      })
-      .catch((error) => {
-        setError(error);
-      });
+      .then((data) => setPostData(data.posts.data))
+      .catch((error) => setError(error));
   }, []);
 
   if (error) {
     return <div>{error.message}</div>;
   }
 
-  if (!postData) {
-    return <div>Loading...</div>;
-  }
-
   return (
     <ul>
-      {postData &&
-        postData.data.map((post: Post, index: number) => (
-          <li key={index}>
-            <p>{post.message}</p>
-            {post.attachments &&
-              post.attachments.data.map((attachment: Attachments) =>
-                attachment.subattachments.data.map(
-                  (subattachment: SubAttachments) => (
-                    <img
-                      src={subattachment.media.image.src}
-                      width={200}
-                      alt="House Image"
-                    />
-                  )
-                )
-              )}
-          </li>
-        ))}
+      {postData.map((post: Post, index: number) => (
+        <li key={index}>
+          <p>{post.message}</p>
+          {post.attachments &&
+            post.attachments.data.map((attachment) =>
+              attachment.subattachments.data.map((subattachment) => (
+                <img
+                  src={subattachment.media.image.src}
+                  width={200}
+                  className={"flex-row"}
+                  alt="House Image"
+                />
+              ))
+            )}
+        </li>
+      ))}
     </ul>
   );
 };
 
 export default FacebookPosts;
-
-// TODO: Clean any left over data that don't really inflict the images being displayed

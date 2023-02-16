@@ -9,7 +9,7 @@ function toggleHidden() {
 
 export default function Navbar() {
   return (
-    <nav className="p-3 bg-gray-900">
+    <nav className="p-3 bg-blue-500 sticky top-0">
       <div className="container flex flex-wrap items-center justify-between mx-auto">
         <a href="/" className="flex items-center">
           <img src={EkaLogo} className="h-12 ml-3 sm:h-14" alt="Eka Logo" />
@@ -39,22 +39,18 @@ export default function Navbar() {
         </button>
         <div className="hidden w-full md:block md:w-auto" id="navbar-solid-bg">
           <ul className="flex flex-col mt-4 rounded-lg md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 bg-gray-800 md:bg-transparent border-gray-700">
-            <li>
-              <NavLink
-                to="/"
-                className="block py-2 pl-3 pr-4 text-white rounded md:p-0 bg-blue-600 md:bg-transparent"
-              >
-                Inicio
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                to="/propiedades"
-                className="block py-2 pl-3 pr-4 rounded md:border-0 md:p-0 text-gray-400 md:hover:text-white hover:bg-gray-700 hover:text-white md:hover:bg-transparent"
-              >
-                Propiedades
-              </NavLink>
-            </li>
+            <NavLink
+              to="/"
+              className="block py-2 pl-3 pr-4 text-white rounded md:p-0 bg-blue-600 md:bg-transparent"
+            >
+              Inicio
+            </NavLink>
+            <NavLink
+              to="/propiedades"
+              className="block py-2 pl-3 pr-4 rounded md:border-0 md:p-0 text-gray-400 md:hover:text-white hover:bg-gray-700 hover:text-white md:hover:bg-transparent"
+            >
+              Propiedades
+            </NavLink>
           </ul>
         </div>
       </div>
