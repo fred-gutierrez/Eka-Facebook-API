@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
+import PostItem from "../components/PostItem";
 
-interface Post {
+export interface Post {
   attachments: {
     data: {
       subattachments: {
@@ -18,7 +19,7 @@ interface Post {
 }
 
 const accessToken =
-  "EAAKI47hCLskBAPBLBpzAJPeX2j6tEbYLZClX1DtjEDLR2LtQGuqvfsrc7jG4IzHii8449k45tp84DNX7oUtZAIS2tPlwZBEmB94qSFjEqynv8m3BlpJszthM6aSZBMC0ky1ui474DSCGSszqQSAwUuqZAhDyNVn2FyBPFS388ZAeBZATdbqdNOZCVCYZA1NslSUCwkQELBAspXs4ZAzrS274BXYq9CazWZCvYEZD";
+  "EAAKI47hCLskBAHGu7FBYEZA8iLsSZAjZBytfTb4nMZBEcHO33x1rmUDglUdhmmfx7T0ZC5he0DZBI6cb0OAAC8YrffgYUOnQtD3gBOBfuesavGVnKmrY6KaSi2I0VoBi66sT9CwZAWaOU5E30lZAsGAZCDRjUfgzcSql7bdCCR5q2gbcV6bXc5GZCHbCYSrOT1KluFXFRLsihINZBdcnIYzDfca5ejMqmanr0UZD";
 
 const FacebookPosts = () => {
   const [postData, setPostData] = useState<Post[]>([]);
@@ -37,26 +38,7 @@ const FacebookPosts = () => {
     return <div>{error.message}</div>;
   }
 
-  return (
-    <ul>
-      {postData.map((post: Post, index: number) => (
-        <li key={index}>
-          <p>{post.message}</p>
-          {post.attachments &&
-            post.attachments.data.map((attachment) =>
-              attachment.subattachments.data.map((subattachment) => (
-                <img
-                  src={subattachment.media.image.src}
-                  width={200}
-                  className={"flex-row"}
-                  alt="House Image"
-                />
-              ))
-            )}
-        </li>
-      ))}
-    </ul>
-  );
+  return <PostItem postData={postData} />;
 };
 
 export default FacebookPosts;

@@ -1,15 +1,15 @@
 import React from "react";
 import EkaLogo from "../images/eka-logo-transparent1.png";
-import { NavLink } from "react-router-dom";
-
-function toggleHidden() {
-  const navbarHamburger = document.getElementById("navbar-solid-bg");
-  navbarHamburger!.classList.toggle("hidden");
-}
+import { NavLink, Router } from "react-router-dom";
 
 export default function Navbar() {
+  function toggleHidden() {
+    const navbarHamburger = document.getElementById("navbar-solid-bg");
+    navbarHamburger!.classList.toggle("hidden");
+  }
+
   return (
-    <nav className="p-3 bg-blue-500 sticky top-0">
+    <nav className="p-3 bg-gray-900 sticky top-0">
       <div className="container flex flex-wrap items-center justify-between mx-auto">
         <a href="/" className="flex items-center">
           <img src={EkaLogo} className="h-12 ml-3 sm:h-14" alt="Eka Logo" />
@@ -38,16 +38,16 @@ export default function Navbar() {
           </svg>
         </button>
         <div className="hidden w-full md:block md:w-auto" id="navbar-solid-bg">
-          <ul className="flex flex-col mt-4 rounded-lg md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 bg-gray-800 md:bg-transparent border-gray-700">
+          <ul className="flex flex-col mt-4 rounded-lg md:flex-row md:space-x-8 md:mt-0 md:text-md md:font-medium md:border-0 bg-gray-800 md:bg-transparent border-gray-700">
             <NavLink
               to="/"
-              className="block py-2 pl-3 pr-4 text-white rounded md:p-0 bg-blue-600 md:bg-transparent"
+              className={`block py-2 pl-3 pr-4 rounded md:border-0 md:p-0 text-gray-400 md:hover:text-white hover:bg-gray-700 hover:text-white md:hover:bg-transparent`}
             >
               Inicio
             </NavLink>
             <NavLink
               to="/propiedades"
-              className="block py-2 pl-3 pr-4 rounded md:border-0 md:p-0 text-gray-400 md:hover:text-white hover:bg-gray-700 hover:text-white md:hover:bg-transparent"
+              className={`block py-2 pl-3 pr-4 rounded md:border-0 md:p-0 text-gray-400 md:hover:text-white hover:bg-gray-700 hover:text-white md:hover:bg-transparent`}
             >
               Propiedades
             </NavLink>
@@ -57,3 +57,5 @@ export default function Navbar() {
     </nav>
   );
 }
+
+// TODO: Fix the active class
