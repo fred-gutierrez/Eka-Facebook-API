@@ -1,10 +1,9 @@
-import React from "react";
 import EkaLogo from "../images/eka-logo-transparent1.png";
-import { NavLink, Router } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 export default function Navbar() {
   function toggleHidden() {
-    const navbarHamburger = document.getElementById("navbar-solid-bg");
+    const navbarHamburger = document.getElementById("navbar-menu");
     navbarHamburger!.classList.toggle("hidden");
   }
 
@@ -17,7 +16,7 @@ export default function Navbar() {
         <button
           data-collapse-toggle="navbar-solid-bg"
           type="button"
-          className="inline-flex items-center p-2 mr-3 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+          className="inline-flex items-center p-2 mr-3 text-sm rounded-lg md:hidden focus:outline-none focus:ring-2 text-gray-400 hover:bg-gray-700 focus:ring-gray-600"
           aria-controls="navbar-solid-bg"
           aria-expanded="false"
           onClick={toggleHidden}
@@ -37,17 +36,23 @@ export default function Navbar() {
             ></path>
           </svg>
         </button>
-        <div className="hidden w-full md:block md:w-auto" id="navbar-solid-bg">
+        <div className="hidden w-full md:block md:w-auto" id="navbar-menu">
           <ul className="flex flex-col mt-4 rounded-lg md:flex-row md:space-x-8 md:mt-0 md:text-md md:font-medium md:border-0 bg-gray-800 md:bg-transparent border-gray-700">
             <NavLink
               to="/"
-              className={`block py-2 pl-3 pr-4 rounded md:border-0 md:p-0 text-gray-400 md:hover:text-white hover:bg-gray-700 hover:text-white md:hover:bg-transparent`}
+              className={({ isActive }) =>
+                (isActive ? "text-white " : "text-gray-400 hover:text-white ") +
+                "py-2 pl-3 pr-4 md:p-0 rounded md:border-0 hover:bg-gray-700 md:hover:bg-transparent"
+              }
             >
               Inicio
             </NavLink>
             <NavLink
               to="/propiedades"
-              className={`block py-2 pl-3 pr-4 rounded md:border-0 md:p-0 text-gray-400 md:hover:text-white hover:bg-gray-700 hover:text-white md:hover:bg-transparent`}
+              className={({ isActive }) =>
+                (isActive ? "text-white " : "text-gray-400 hover:text-white ") +
+                "py-2 pl-3 pr-4 md:p-0 rounded md:border-0 hover:bg-gray-700 md:hover:bg-transparent"
+              }
             >
               Propiedades
             </NavLink>
@@ -57,5 +62,3 @@ export default function Navbar() {
     </nav>
   );
 }
-
-// TODO: Fix the active class

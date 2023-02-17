@@ -15,7 +15,7 @@ const PostItem = ({ postData }: Props) => {
               attachment.subattachments.data.map((subattachment: any) => (
                 <img
                   src={subattachment.media.image.src}
-                  className={"inline-flex h-32 aspect-h-3 p-1"}
+                  className={"inline-flex h-32 p-1"}
                   alt={`Facebook post image ${index}`}
                 />
               ))
