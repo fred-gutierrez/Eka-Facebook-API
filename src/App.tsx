@@ -7,14 +7,14 @@ import Propiedades from "./pages/Propiedades";
 
 function App() {
   return (
-    <>
+    <div className="silver">
       <Navbar />
       <Routes>
         <Route path="/" element={<Inicio />} />
         <Route path="/propiedades" element={<Propiedades />} />
       </Routes>
       <Footer />
-    </>
+    </div>
   );
 }
 

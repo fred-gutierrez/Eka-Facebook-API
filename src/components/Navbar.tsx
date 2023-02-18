@@ -8,7 +8,7 @@ export default function Navbar() {
   }
 
   return (
-    <nav className="p-3 bg-gray-900 sticky top-0">
+    <nav className="p-3 sticky sky top-0">
       <div className="container flex flex-wrap items-center justify-between mx-auto">
         <a href="/" className="flex items-center">
           <img src={EkaLogo} className="h-12 ml-3 sm:h-14" alt="Eka Logo" />
@@ -16,7 +16,7 @@ export default function Navbar() {
         <button
           data-collapse-toggle="navbar-solid-bg"
           type="button"
-          className="inline-flex items-center p-2 mr-3 text-sm rounded-lg md:hidden focus:outline-none focus:ring-2 text-gray-400 hover:bg-gray-700 focus:ring-gray-600"
+          className="inline-flex items-center p-2 mr-3 text-sm rounded-lg md:hidden focus:outline-none focus:ring-2 text-gray-900 hover:bg-gray-200 focus:ring-gray-100"
           aria-controls="navbar-solid-bg"
           aria-expanded="false"
           onClick={toggleHidden}
@@ -37,12 +37,12 @@ export default function Navbar() {
           </svg>
         </button>
         <div className="hidden w-full md:block md:w-auto" id="navbar-menu">
-          <ul className="flex flex-col mt-4 rounded-lg md:flex-row md:space-x-8 md:mt-0 md:text-md md:font-medium md:border-0 bg-gray-800 md:bg-transparent border-gray-700">
+          <ul className="flex flex-col mt-4 rounded-lg md:flex-row md:space-x-8 md:mt-0 md:text-md md:font-medium md:border-0 bg-gray-200 md:bg-transparent border-gray-300">
             <NavLink
               to="/"
               className={({ isActive }) =>
-                (isActive ? "text-white " : "text-gray-400 hover:text-white ") +
-                "py-2 pl-3 pr-4 md:p-0 rounded md:border-0 hover:bg-gray-700 md:hover:bg-transparent"
+                (isActive ? "text-black " : "text-gray-400 hover:text-black ") +
+                "py-2 pl-3 pr-4 md:p-0 rounded md:border-0 hover:bg-gray-300 md:hover:bg-transparent hover:underline"
               }
             >
               Inicio
@@ -50,8 +50,8 @@ export default function Navbar() {
             <NavLink
               to="/propiedades"
               className={({ isActive }) =>
-                (isActive ? "text-white " : "text-gray-400 hover:text-white ") +
-                "py-2 pl-3 pr-4 md:p-0 rounded md:border-0 hover:bg-gray-700 md:hover:bg-transparent"
+                (isActive ? "text-black " : "text-gray-400 hover:text-black ") +
+                "py-2 pl-3 pr-4 md:p-0 rounded md:border-0 hover:bg-gray-300 md:hover:bg-transparent hover:underline"
               }
             >
               Propiedades

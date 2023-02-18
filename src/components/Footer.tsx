@@ -4,7 +4,7 @@ import EkaLogo from "../images/eka-logo-transparent2.png";
 export default function Footer() {
   const faceBookPage = "https://www.facebook.com/BienesRaicesEka";
   return (
-    <footer className="p-4 sm:p-6 bg-gray-900">
+    <footer className="p-4 sm:p-6 bg-transparent">
       <div className="md:flex md:justify-between">
         <div className="mb-6 md:mb-0">
           <a href="/" className="flex items-center">
@@ -13,10 +13,10 @@ export default function Footer() {
         </div>
         <div className="grid grid-cols-2 gap-8 sm:gap-6 sm:grid-cols-3">
           <div>
-            <h2 className="mb-6 text-sm font-semibold uppercase text-white">
+            <h2 className="mb-6 text-sm font-semibold uppercase text-black">
               Seguínos
             </h2>
-            <ul className="text-gray-400">
+            <ul className="text-gray-600">
               <li className="mb-4">
                 {" "}
                 <a
@@ -31,9 +31,9 @@ export default function Footer() {
           </div>
         </div>
       </div>
-      <hr className="my-6 sm:mx-auto border-gray-700 lg:my-8" />
+      <hr className="my-6 sm:mx-auto border-gray-400 lg:my-8" />
       <div className="sm:flex sm:items-center sm:justify-between">
-        <span className="text-sm sm:text-center text-gray-400">
+        <span className="text-sm sm:text-center text-gray-600">
           © 2023{" "}
           <a href="/" className="hover:underline">
             Eka Bienes Raíces™
@@ -43,7 +43,7 @@ export default function Footer() {
         <div className="flex my-4 space-x-6 sm:justify-center sm:my-0">
           <a
             href={faceBookPage}
-            className="text-gray-500 hover:text-white"
+            className="text-gray-600 hover:text-black"
             target={"_blank"}
           >
             <svg
@@ -61,13 +61,13 @@ export default function Footer() {
             <span className="sr-only">Facebook page</span>
           </a>
         </div>
-        <span className="text-gray-400 text-xs">
+        <span className="text-gray-600 text-xs">
           {" "}
           Creado por{" "}
           <a
             target={"_blank"}
             href="https://freddavidsolisgutierrez.netlify.app/"
-            className="text-gray-500 hover:text-white"
+            className="text-gray-600 hover:text-black"
           >
             Fred David Solis Gutierrez
           </a>
