@@ -18,10 +18,11 @@ export interface Post {
     }[];
   };
   message: string;
+  full_picture: string;
 }
 
 const accessToken =
-  "EAAKI47hCLskBAATlKSvZBf2MZCZAK1Pby2zMcvfeKqQK14D10ffrZBa1NyKeqAHDJUtXJgcI9SJLohZCtooZAactQKKnodJl8DfBNf3J9vxJxO9o6nzV4PIKBJwkZABEsFxXnVHMSCLe2U2BTMOHEDJYNlCEy86FOxv492b5vxMKgcZBynnAzdZACFI5m61kUN6vv0Rj5ArZC2xYkybDZCZAZACxhoHNzRTZA5n1sZD";
+  "EAAKI47hCLskBAPJjPr2nyUcZCyENV5QtB8LgZBwFU97PhQdKoOcUhNZC5O4iToqtfZBFrGrwxOhhEyd54w6Pbmq3ZCrxiEK7Qvu1kFP5BWZCLD3bLZC9FwoQjP0xJ1qokMDu434lUSBxJtMSe3XeVmZCxfbpQWjh2NXiZA86jMSZApz15oVZCCGWQvNCuc8Yghm59lgILaqBYEompU2cc9C0iebqtHpigYBCQQZD";
 
 const FacebookPosts = () => {
   const [postData, setPostData] = useState<Post[]>([]);
@@ -43,7 +44,7 @@ const FacebookPosts = () => {
     const postsRef = database.ref("posts");
 
     fetch(
-      `https://graph.facebook.com/me?fields=posts{message,attachments{subattachments{media{image{src}}}}}&access_token=${accessToken}`
+      `https://graph.facebook.com/me?fields=posts{message,full_picture,attachments{subattachments{media{image{src}}}}}&access_token=${accessToken}`
     )
       .then((res) => res.json())
       .then((data) => {
