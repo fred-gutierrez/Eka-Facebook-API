@@ -8,7 +8,7 @@ const PostItem = ({ postData }: Props) => {
   return (
     <ul>
       {postData.map((post: Post, index: number) => (
-        <li key={index}>
+        <li key={index} id={post.id}>
           {/* <div className="flex flex-col md:flex-row md:max-w-xl rounded-lg bg-white shadow-lg"> */}
           <img
             src={post.full_picture}

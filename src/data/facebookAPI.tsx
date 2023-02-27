@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import firebase from "firebase/compat/app";
 import PostItem from "../components/PostItem";
 
 export interface Post {
@@ -18,6 +17,7 @@ export interface Post {
   };
   message: string;
   full_picture: string;
+  id: string;
 }
 
 const FacebookPosts = () => {
