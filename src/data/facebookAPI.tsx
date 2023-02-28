@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import PostItem from "../components/PostItem";
+import postsData from "./postsData.json";
 
 export interface Post {
   attachments: {
@@ -25,12 +26,7 @@ const FacebookPosts = () => {
   const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
-    fetch(`http://localhost:8000/propiedades`)
-      .then((res) => res.json())
-      .then((data) => {
-        setPostData(data);
-      })
-      .catch((error) => setError(error));
+    setPostData(postsData);
   }, []);
 
   if (error) {
@@ -41,5 +37,3 @@ const FacebookPosts = () => {
 };
 
 export default FacebookPosts;
-
-//TODO: Save the post data without having to run npm run start:backend
