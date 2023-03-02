@@ -12,16 +12,16 @@ const PostItem = ({ postData }: Props) => {
           key={index}
           id={post.id}
           className={`bg-gray-300 items-center mb-5 py-8 px-5 mx-5
-          max-w-screen-xl md:grid md:grid-cols-2
-          2xl:mx-auto sm:py-16 lg:px-6 rounded-xl`}
+          max-w-screen-xl lg:grid lg:grid-cols-2
+          xl:mx-auto lg:px-6 rounded-xl`}
         >
           <div className="grid grid-cols-2 gap-1">
             <img
               src={post.full_picture}
               alt={`Facebook post main image`}
-              className={`h-52 2xl:h-80 min-w-full min-h-full object-cover rounded-lg`}
+              className={`h-52 min-w-full min-h-full object-cover rounded-lg`}
             />
-            <div className="grid grid-cols-2 gap-1 md:grid-cols-2">
+            <div className="grid grid-cols-2 gap-1">
               {post.attachments &&
                 post.attachments.data.map((attachment: any) =>
                   attachment.subattachments.data
@@ -29,7 +29,7 @@ const PostItem = ({ postData }: Props) => {
                       <img
                         src={subattachment.media.image.src}
                         alt={`Facebook post image ${index}`}
-                        className={`h-28 2xl:h-48
+                        className={`h-28 md:h-40 2xl:h-44 lg:h-40
                         min-w-full rounded-lg object-cover mx-auto`}
                       />
                     ))
@@ -37,7 +37,7 @@ const PostItem = ({ postData }: Props) => {
                 )}
             </div>
           </div>
-          <div className="mt-4 md:mt-0 md:ml-5">
+          <div className="mt-4 lg:ml-5">
             <p>{post.message}</p>
           </div>
         </li>
