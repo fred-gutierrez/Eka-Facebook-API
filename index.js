@@ -16,10 +16,26 @@ fetch(
 )
   .then((res) => res.json())
   .then((data) => {
-    fs.writeFileSync(
-      "./src/data/postsData.json",
-      JSON.stringify(data.posts.data)
-    );
+    const postsById = {};
+    data.posts?.data?.forEach((post) => {
+      if (post.id in postsById) {
+        console.warn(`Duplicate post ID: ${post.id}`);
+      } else {
+        postsById[post.id] = post;
+      }
+    });
+    const filteredData = Object.values(postsById).filter((post) => {
+      const words = post.message?.split(" ");
+      return words?.length >= 15;
+    });
+    if (filteredData.length > 0) {
+      fs.writeFileSync(
+        "./src/data/postsData.json",
+        JSON.stringify(filteredData)
+      );
+    } else {
+      console.error("Error: No data found in response");
+    }
   })
   .catch((error) => console.error(error));
 

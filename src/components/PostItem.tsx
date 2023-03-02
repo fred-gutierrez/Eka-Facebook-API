@@ -42,8 +42,13 @@ const PostItem = ({ postData }: Props) => {
                   )}
               </div>
             </div>
-            <div className="mt-4 lg:ml-5">
-              <p>{price}</p>
+            <div className="mt-4 lg:ml-5 grid grid-cols-2 container">
+              <h1 className={`text-lg`}>Title Placeholder</h1>
+              <h1 className={`text-xl font-bold`}>{price}</h1>
+            </div>
+            <div className="mt-4 lg:ml-5 grid grid-cols-2 container">
+              <h1 className={`text-md`}>Location Placeholder</h1>
+              <h1 className={`text-md`}>Alquiler Placeholder</h1>
             </div>
           </li>
         );
