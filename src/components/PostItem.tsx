@@ -9,7 +9,7 @@ const PostItem = ({ postData }: Props) => {
     <ul>
       {postData.map((post: Post, index: number) => {
         const price = post.message.match(
-          /(\$|₡)\d{1,3}(\.\d{3})*(\,\d{1,3})?/g
+          /(\$|₡)\d{1,4}(,\d{3})*(\.\d{3})*(\.\d+)?/g
         );
 
         return (
