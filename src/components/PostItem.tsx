@@ -13,13 +13,13 @@ const PostItem = ({ postData }: Props) => {
           id={post.id}
           className={`bg-gray-300 items-center mb-5 py-8 px-5 mx-5
           max-w-screen-xl md:grid md:grid-cols-2
-          2xl:ml-48 2xl:mx-0 sm:py-16 lg:px-6 rounded-xl`}
+          2xl:mx-auto sm:py-16 lg:px-6 rounded-xl`}
         >
           <div>
             <img
               src={post.full_picture}
               alt={`Facebook post main image`}
-              className={`h-52 min-w-full mx-auto rounded-lg`}
+              className={`h-52 2xl:h-80 min-w-full mx-auto object-cover rounded-t-lg`}
             />
             <div className="grid grid-cols-2 md:grid-cols-4">
               {post.attachments &&
@@ -29,7 +29,8 @@ const PostItem = ({ postData }: Props) => {
                       <img
                         src={subattachment.media.image.src}
                         alt={`Facebook post image ${index}`}
-                        className={`h-28 min-w-full object-cover mx-auto rounded-lg`}
+                        className={`h-28 2xl:h-48
+                        min-w-full object-cover mx-auto`}
                       />
                     ))
                     .slice(1, 5)
