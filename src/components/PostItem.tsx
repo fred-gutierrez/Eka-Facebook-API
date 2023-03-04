@@ -1,3 +1,4 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Post } from "../data/facebookAPI";
 
 interface Props {
@@ -49,6 +50,54 @@ const PostItem = ({ postData }: Props) => {
             <div className="mt-4 lg:ml-5 grid grid-cols-2 container">
               <h1 className={`text-md`}>Location Placeholder</h1>
               <h1 className={`text-md`}>Alquiler Placeholder</h1>
+            </div>
+            <div className="mt-4 lg:ml-5 grid grid-cols-2 container">
+              <div>
+                <div className="inline-flex items-center mx-1">
+                  <FontAwesomeIcon
+                    className="mr-1"
+                    icon={["fas", `bed`]}
+                    size="1x"
+                  />
+                  <span>0 Dormitorios</span>
+                </div>
+                <div className="inline-flex items-center mx-1">
+                  <FontAwesomeIcon
+                    className="mr-1"
+                    icon={["fas", `bath`]}
+                    size="1x"
+                  />
+                  <span>0 Baños</span>
+                </div>
+                <div className="inline-flex items-center mx-1">
+                  <FontAwesomeIcon
+                    className="mr-1"
+                    icon={["far", `map`]}
+                    size="1x"
+                  />
+                  <span>0000m2</span>
+                </div>
+                <div className="inline-flex items-center mx-1">
+                  <FontAwesomeIcon
+                    className="mr-1"
+                    icon={["fas", `house`]}
+                    size="1x"
+                  />
+                  <span>Residencial</span>
+                </div>
+              </div>
+              <a
+                href={`https://www.facebook.com/BienesRaicesEka/posts/${post.id}`}
+                target={"_blank"}
+              >
+                <button
+                  className={`bg-blue-500 hover:bg-blue-400 text-white 
+                font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 
+                rounded w-32 h-12`}
+                >
+                  Ver Detalles
+                </button>
+              </a>
             </div>
           </li>
         );
