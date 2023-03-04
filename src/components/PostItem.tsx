@@ -13,6 +13,8 @@ const PostItem = ({ postData }: Props) => {
           /(\$|₡)\d{1,4}(,\d{3})*(\.\d{3})*(\.\d+)?/g
         );
         const title = post.message.substring(0, post.message.indexOf("\n"));
+        const location = post.message.match(/📍(.*?)\n/);
+        const locationString = location !== null ? "📍 " + location[1] : "";
 
         return (
           <li
@@ -49,7 +51,7 @@ const PostItem = ({ postData }: Props) => {
               <h1 className={`text-xl font-bold`}>{price}</h1>
             </div>
             <div className="mt-4 lg:ml-5 grid grid-cols-2 container">
-              <h1 className={`text-md`}>Location Placeholder</h1>
+              <h1 className={`text-md`}>{locationString}</h1>
               <h1 className={`text-md`}>Alquiler Placeholder</h1>
             </div>
             <div className="mt-4 lg:ml-5 grid grid-cols-2 container">

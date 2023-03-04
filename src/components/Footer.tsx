@@ -10,6 +10,7 @@ export default function Footer() {
           <a href="/" className="flex items-center">
             <img src={EkaLogo} className="h-30 ml-3" alt="Eka Logo" />
           </a>
+          {/* TODO: Fix the logo from being clickable on the whole right side */}
         </div>
         <div className="grid grid-cols-2 gap-8 sm:gap-6 sm:grid-cols-3">
           <div>
