@@ -12,6 +12,7 @@ const PostItem = ({ postData }: Props) => {
         const price = post.message.match(
           /(\$|₡)\d{1,4}(,\d{3})*(\.\d{3})*(\.\d+)?/g
         );
+        const title = post.message.substring(0, post.message.indexOf("\n"));
 
         return (
           <li
@@ -44,7 +45,7 @@ const PostItem = ({ postData }: Props) => {
               </div>
             </div>
             <div className="mt-4 lg:ml-5 grid grid-cols-2 container">
-              <h1 className={`text-lg`}>Title Placeholder</h1>
+              <h1 className={`text-lg`}>{title}</h1>
               <h1 className={`text-xl font-bold`}>{price}</h1>
             </div>
             <div className="mt-4 lg:ml-5 grid grid-cols-2 container">
