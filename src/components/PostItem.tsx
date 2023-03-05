@@ -64,6 +64,22 @@ const PostItem = ({ postData }: Props) => {
         );
         const metros = metrosMatch ? parseFloat(metrosMatch[1]) : 0;
 
+        // * Residencial|Lote|Bodega|Casa|Apartamento|Terreno
+
+        const wordsArray =
+          post.message
+            .match(
+              /\b(residencial|lote|bodega|casa|apartamento|terreno|local)\b/gi
+            )
+            ?.map((word) => word.charAt(0).toUpperCase() + word.slice(1)) || [];
+        const words = [
+          ...new Set(
+            wordsArray.includes("Residencial")
+              ? ["Residencial"]
+              : [wordsArray[0]]
+          ),
+        ];
+
         return (
           <li
             key={index}
@@ -141,14 +157,68 @@ const PostItem = ({ postData }: Props) => {
                       <span>{metros}m2</span>
                     </div>
                   ) : null}
-                  <div className="inline-flex items-center mx-1">
-                    <FontAwesomeIcon
-                      className="mr-1"
-                      icon={["fas", `house`]}
-                      size="1x"
-                    />
-                    <span>Residencial</span>
-                  </div>
+                  {/* // * Words IF's */}
+                  {words.includes("Residencial") && (
+                    <div className="inline-flex items-center mx-1">
+                      <FontAwesomeIcon
+                        className="mr-1"
+                        icon={["fas", "house-user"]}
+                        size="1x"
+                      />
+                      <span>Residencial</span>
+                    </div>
+                  )}
+                  {words.includes("Terreno") && (
+                    <div className="inline-flex items-center mx-1">
+                      <FontAwesomeIcon
+                        className="mr-1"
+                        icon={["fas", "mountain-sun"]}
+                        size="1x"
+                      />
+                      <span>Terreno</span>
+                    </div>
+                  )}
+                  {words.includes("Casa") && (
+                    <div className="inline-flex items-center mx-1">
+                      <FontAwesomeIcon
+                        className="mr-1"
+                        icon={["fas", "house-chimney"]}
+                        size="1x"
+                      />
+                      <span>Casa</span>
+                    </div>
+                  )}
+                  {words.includes("Apartamento") && (
+                    <div className="inline-flex items-center mx-1">
+                      <FontAwesomeIcon
+                        className="mr-1"
+                        icon={["fas", "building-user"]}
+                        size="1x"
+                      />
+                      <span>Apartamento</span>
+                    </div>
+                  )}
+                  {words.includes("Local") && (
+                    <div className="inline-flex items-center mx-1">
+                      <FontAwesomeIcon
+                        className="mr-1"
+                        icon={["fas", "shop"]}
+                        size="1x"
+                      />
+                      <span>Local</span>
+                    </div>
+                  )}
+                  {words.includes("Bodega") && (
+                    <div className="inline-flex items-center mx-1">
+                      <FontAwesomeIcon
+                        className="mr-1"
+                        icon={["fas", "warehouse"]}
+                        size="1x"
+                      />
+                      <span>Bodega</span>
+                    </div>
+                  )}
+                  {/* // * Words IF's Ending */}
                 </div>
                 <div className="text-center">
                   <a
