@@ -146,7 +146,7 @@ const PostItem = ({ postData }: Props) => {
                       </span>
                     </div>
                   ) : null}
-                  {metros ? (
+                  {metros >= 45 ? (
                     <div className="inline-flex items-center mx-1">
                       <FontAwesomeIcon
                         className="mr-1"
