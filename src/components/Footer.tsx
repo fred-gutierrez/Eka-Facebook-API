@@ -7,7 +7,7 @@ export default function Footer() {
     <footer className="p-4 sm:p-6 bg-transparent">
       <div className="md:flex md:justify-between">
         <div className="mb-6 md:mb-0">
-          <a href="/" className="flex items-center">
+          <a href="/" className="flex">
             <img src={EkaLogo} className="h-30 ml-3" alt="Eka Logo" />
           </a>
           {/* TODO: Fix the logo from being clickable on the whole right side */}
