@@ -6,6 +6,7 @@ export default function Inicio() {
         <br />
         Comerciales!
       </h1>
+      {/* // TODO: Add a button in the middle that re-directs to properties  */}
     </div>
   );
 }

@@ -9,14 +9,19 @@ const PostItem = ({ postData }: Props) => {
   return (
     <ul>
       {postData.map((post: Post, index: number) => {
+        // * Price
         const price = post.message.match(
           /(\$|₡)\d{1,4}(,\d{3})*(\.\d{3})*(\.\d+)?/g
         );
+
+        // * Title
         const title = post.message.substring(0, post.message.indexOf("\n"));
 
+        // * Location
         const location = post.message.match(/📍(.*?)\n/);
         const locationString = location !== null ? "📍 " + location[1] : "";
 
+        // * Alquiler o Venta
         const alquilerVentaMatch = post.message.match(
           /(alquilo|alquiler|vendo|venta)/i
         );
@@ -25,6 +30,31 @@ const PostItem = ({ postData }: Props) => {
             ? "Alquiler"
             : "Venta"
           : null;
+
+        // * Baños and Habitaciones
+        function parseSpanishNumber(numberString: string) {
+          switch (numberString.toLowerCase()) {
+            case "una":
+              return 1;
+            case "dos":
+              return 2;
+            case "tres":
+              return 3;
+            // Add more cases as needed for other Spanish numbers
+            default:
+              return parseInt(numberString);
+          }
+        }
+
+        const habitacionMatch = post.message.match(
+          /(\d+|\buna\b|\bdos\b|\btres\b)\s*(habitaci[oó]n|(?:es)|dormitorio)s?/i
+        );
+        const banoMatch = post.message.match(/(\d+)\s*baño(?:s)?/i);
+
+        const habitaciones = habitacionMatch
+          ? parseSpanishNumber(habitacionMatch[1])
+          : 0;
+        const banos = banoMatch ? parseInt(banoMatch[1]) : 0;
 
         return (
           <li
@@ -69,22 +99,30 @@ const PostItem = ({ postData }: Props) => {
               </div>
               <div className="mt-4 lg:ml-5 grid grid-cols-2">
                 <div>
-                  <div className="inline-flex items-center mx-1">
-                    <FontAwesomeIcon
-                      className="mr-1"
-                      icon={["fas", `bed`]}
-                      size="1x"
-                    />
-                    <span>0 Dormitorios</span>
-                  </div>
-                  <div className="inline-flex items-center mx-1">
-                    <FontAwesomeIcon
-                      className="mr-1"
-                      icon={["fas", `bath`]}
-                      size="1x"
-                    />
-                    <span>0 Baños</span>
-                  </div>
+                  {habitaciones ? (
+                    <div className="inline-flex items-center mx-1">
+                      <FontAwesomeIcon
+                        className="mr-1"
+                        icon={["fas", `bed`]}
+                        size="1x"
+                      />
+                      <span>
+                        {habitaciones} Dormitorio{habitaciones > 1 ? "s" : ""}
+                      </span>
+                    </div>
+                  ) : null}
+                  {banos ? (
+                    <div className="inline-flex items-center mx-1">
+                      <FontAwesomeIcon
+                        className="mr-1"
+                        icon={["fas", `bath`]}
+                        size="1x"
+                      />
+                      <span>
+                        {banos} Baño{banos > 1 ? "s" : ""}
+                      </span>
+                    </div>
+                  ) : null}
                   <div className="inline-flex items-center mx-1">
                     <FontAwesomeIcon
                       className="mr-1"
