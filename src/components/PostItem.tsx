@@ -49,12 +49,20 @@ const PostItem = ({ postData }: Props) => {
         const habitacionMatch = post.message.match(
           /(\d+|\buna\b|\bdos\b|\btres\b)\s*(habitaci[oó]n|(?:es)|dormitorio)s?/i
         );
-        const banoMatch = post.message.match(/(\d+)\s*baño(?:s)?/i);
+        const banoMatch = post.message.match(
+          /(\d+)\s*(?:batería(?:s)? de\s+)?baño(?:s)?/i
+        );
 
         const habitaciones = habitacionMatch
           ? parseSpanishNumber(habitacionMatch[1])
           : 0;
         const banos = banoMatch ? parseInt(banoMatch[1]) : 0;
+
+        // * Metros cuadrados
+        const metrosMatch = post.message.match(
+          /(\d+(?:\.\d+)?)\s*(?=m²|M2|metros\s+cuadrados|mts|de terreno|de construcci[oó]n)/i
+        );
+        const metros = metrosMatch ? parseFloat(metrosMatch[1]) : 0;
 
         return (
           <li
@@ -123,14 +131,16 @@ const PostItem = ({ postData }: Props) => {
                       </span>
                     </div>
                   ) : null}
-                  <div className="inline-flex items-center mx-1">
-                    <FontAwesomeIcon
-                      className="mr-1"
-                      icon={["far", `map`]}
-                      size="1x"
-                    />
-                    <span>0000m2</span>
-                  </div>
+                  {metros ? (
+                    <div className="inline-flex items-center mx-1">
+                      <FontAwesomeIcon
+                        className="mr-1"
+                        icon={["far", `map`]}
+                        size="1x"
+                      />
+                      <span>{metros}m2</span>
+                    </div>
+                  ) : null}
                   <div className="inline-flex items-center mx-1">
                     <FontAwesomeIcon
                       className="mr-1"
