@@ -65,18 +65,17 @@ const PostItem = ({ postData }: Props) => {
         const metros = metrosMatch ? parseFloat(metrosMatch[1]) : 0;
 
         // * Residencial|Lote|Bodega|Casa|Apartamento|Terreno
-
-        const wordsArray =
+        const propertiesArray =
           post.message
             .match(
               /\b(residencial|lote|bodega|casa|apartamento|terreno|local)\b/gi
             )
             ?.map((word) => word.charAt(0).toUpperCase() + word.slice(1)) || [];
-        const words = [
+        const propertyType = [
           ...new Set(
-            wordsArray.includes("Residencial")
+            propertiesArray.includes("Residencial")
               ? ["Residencial"]
-              : [wordsArray[0]]
+              : [propertiesArray[0]]
           ),
         ];
 
@@ -158,7 +157,7 @@ const PostItem = ({ postData }: Props) => {
                     </div>
                   ) : null}
                   {/* // * Words IF's */}
-                  {words.includes("Residencial") && (
+                  {propertyType.includes("Residencial") && (
                     <div className="inline-flex items-center mx-1">
                       <FontAwesomeIcon
                         className="mr-1"
@@ -168,7 +167,7 @@ const PostItem = ({ postData }: Props) => {
                       <span>Residencial</span>
                     </div>
                   )}
-                  {words.includes("Terreno") && (
+                  {propertyType.includes("Terreno") && (
                     <div className="inline-flex items-center mx-1">
                       <FontAwesomeIcon
                         className="mr-1"
@@ -178,7 +177,7 @@ const PostItem = ({ postData }: Props) => {
                       <span>Terreno</span>
                     </div>
                   )}
-                  {words.includes("Casa") && (
+                  {propertyType.includes("Casa") && (
                     <div className="inline-flex items-center mx-1">
                       <FontAwesomeIcon
                         className="mr-1"
@@ -188,7 +187,7 @@ const PostItem = ({ postData }: Props) => {
                       <span>Casa</span>
                     </div>
                   )}
-                  {words.includes("Apartamento") && (
+                  {propertyType.includes("Apartamento") && (
                     <div className="inline-flex items-center mx-1">
                       <FontAwesomeIcon
                         className="mr-1"
@@ -198,7 +197,7 @@ const PostItem = ({ postData }: Props) => {
                       <span>Apartamento</span>
                     </div>
                   )}
-                  {words.includes("Local") && (
+                  {propertyType.includes("Local") && (
                     <div className="inline-flex items-center mx-1">
                       <FontAwesomeIcon
                         className="mr-1"
@@ -208,7 +207,7 @@ const PostItem = ({ postData }: Props) => {
                       <span>Local</span>
                     </div>
                   )}
-                  {words.includes("Bodega") && (
+                  {propertyType.includes("Bodega") && (
                     <div className="inline-flex items-center mx-1">
                       <FontAwesomeIcon
                         className="mr-1"
