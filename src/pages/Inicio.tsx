@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 export default function Inicio() {
   return (
     <div className="py-64">
@@ -7,7 +9,7 @@ export default function Inicio() {
         Comerciales!
       </h1>
       <div className="text-center">
-        <a href="/propiedades">
+        <Link to="/propiedades">
           <button
             className={`bg-orange-500 hover:bg-orange-400 text-white 
                 font-bold py-2 px-4 border-b-4 border-orange-700 hover:border-orange-500 
@@ -15,7 +17,7 @@ export default function Inicio() {
           >
             Ver Propiedades
           </button>
-        </a>
+        </Link>
       </div>
     </div>
   );
