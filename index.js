@@ -40,3 +40,5 @@ fetch(
   .catch((error) => console.error(error));
 
 app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
+
+// TODO: Fix the fact that it appears to be deleting and re-writing the whole .json file with the new graph api thus deleting old ads

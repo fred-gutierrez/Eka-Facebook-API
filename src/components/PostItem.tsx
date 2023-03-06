@@ -238,8 +238,8 @@ const PostItem = ({ postData }: Props) => {
                     target={"_blank"}
                   >
                     <button
-                      className={`bg-blue-500 hover:bg-blue-400 text-white 
-                font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 
+                      className={`bg-orange-500 hover:bg-orange-400 text-white 
+                font-bold py-2 px-4 border-b-4 border-orange-700 hover:border-orange-500 
                 rounded w-32`}
                     >
                       Ver Detalles
