@@ -256,5 +256,3 @@ const PostItem = ({ postData }: Props) => {
 };
 
 export default PostItem;
-
-//TODO: Style the posts
