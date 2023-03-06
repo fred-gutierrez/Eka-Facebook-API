@@ -19,7 +19,7 @@ const PostItem = ({ postData }: Props) => {
 
         // * Location
         const location = post.message.match(/📍(.*?)\n/);
-        const locationString = location !== null ? "📍 " + location[1] : "";
+        const locationString = location !== null ? location[1] : "";
 
         // * Alquiler o Venta
         const alquilerVentaMatch = post.message.match(
@@ -83,9 +83,13 @@ const PostItem = ({ postData }: Props) => {
           <li
             key={index}
             id={post.id}
-            className={`bg-gray-300 items-center mb-5 py-8 px-5 mx-5
-          max-w-screen-xl lg:grid lg:grid-cols-2
-          xl:mx-auto lg:px-6 rounded-xl`}
+            className={`
+            bg-gray-100 border-2 border-gray-200
+            shadow-lg shadow-gray-200
+            items-center
+            mb-6 md:mb-6 py-8 md:py-6 px-5 mx-5
+            max-w-screen-xl md:grid md:grid-cols-2
+            xl:mx-auto rounded-xl`}
           >
             <div className="grid grid-cols-2 gap-1">
               <img
@@ -110,24 +114,33 @@ const PostItem = ({ postData }: Props) => {
               </div>
             </div>
             <div>
-              <div className="mt-4 lg:ml-5 grid grid-cols-2">
-                <h1 className={`text-lg`}>{title}</h1>
+              <div className="mt-4 md:ml-5 grid grid-cols-2">
+                <h1 className={`text-lg md:text-xl`}>{title}</h1>
                 <div className="mx-auto">
-                  <h1 className={`text-xl font-bold`}>{price}</h1>
-                  <h1 className={`text-md text-center`}>{alquilerVenta}</h1>
+                  <h1 className={`text-xl sm:text-2xl font-bold`}>{price}</h1>
+                  <h1 className={`text-lg text-center font-light`}>
+                    {alquilerVenta}
+                  </h1>
                 </div>
               </div>
-              <div className="mt-4 lg:ml-5">
-                <h1 className={`text-md`}>{locationString}</h1>
-              </div>
-              <div className="mt-4 lg:ml-5 grid grid-cols-2">
+              {locationString && (
+                <div className="mt-4 md:ml-5 flex items-center">
+                  <FontAwesomeIcon
+                    className="mr-2 text-red-500"
+                    icon={["fas", `location-dot`]}
+                    size="sm"
+                  />
+                  <h1 className={`text-lg font-light`}>{locationString}</h1>
+                </div>
+              )}
+              <div className="mt-4 md:ml-5 grid grid-cols-2">
                 <div>
                   {habitaciones ? (
-                    <div className="inline-flex items-center mx-1">
+                    <div className="flex items-center my-1">
                       <FontAwesomeIcon
-                        className="mr-1"
+                        className="mr-1 text-gray-800"
                         icon={["fas", `bed`]}
-                        size="1x"
+                        size="lg"
                       />
                       <span>
                         {habitaciones} Dormitorio{habitaciones > 1 ? "s" : ""}
@@ -135,11 +148,11 @@ const PostItem = ({ postData }: Props) => {
                     </div>
                   ) : null}
                   {banos ? (
-                    <div className="inline-flex items-center mx-1">
+                    <div className="flex items-center my-1">
                       <FontAwesomeIcon
-                        className="mr-1"
+                        className="mr-1 text-gray-800"
                         icon={["fas", `bath`]}
-                        size="1x"
+                        size="lg"
                       />
                       <span>
                         {banos} Baño{banos > 1 ? "s" : ""}
@@ -147,72 +160,72 @@ const PostItem = ({ postData }: Props) => {
                     </div>
                   ) : null}
                   {metros >= 45 ? (
-                    <div className="inline-flex items-center mx-1">
+                    <div className="flex items-center my-1">
                       <FontAwesomeIcon
-                        className="mr-1"
+                        className="mr-1 text-gray-800"
                         icon={["far", `map`]}
-                        size="1x"
+                        size="lg"
                       />
                       <span>{metros}m2</span>
                     </div>
                   ) : null}
                   {/* // * Words IF's */}
                   {propertyType.includes("Residencial") && (
-                    <div className="inline-flex items-center mx-1">
+                    <div className="flex items-center my-1">
                       <FontAwesomeIcon
-                        className="mr-1"
+                        className="mr-1 text-gray-800"
                         icon={["fas", "house-user"]}
-                        size="1x"
+                        size="lg"
                       />
                       <span>Residencial</span>
                     </div>
                   )}
                   {propertyType.includes("Terreno") && (
-                    <div className="inline-flex items-center mx-1">
+                    <div className="flex items-center my-1">
                       <FontAwesomeIcon
-                        className="mr-1"
+                        className="mr-1 text-gray-800"
                         icon={["fas", "mountain-sun"]}
-                        size="1x"
+                        size="lg"
                       />
                       <span>Terreno</span>
                     </div>
                   )}
                   {propertyType.includes("Casa") && (
-                    <div className="inline-flex items-center mx-1">
+                    <div className="flex items-center my-1">
                       <FontAwesomeIcon
-                        className="mr-1"
+                        className="mr-1 text-gray-800"
                         icon={["fas", "house-chimney"]}
-                        size="1x"
+                        size="lg"
                       />
                       <span>Casa</span>
                     </div>
                   )}
                   {propertyType.includes("Apartamento") && (
-                    <div className="inline-flex items-center mx-1">
+                    <div className="flex items-center my-1">
                       <FontAwesomeIcon
-                        className="mr-1"
+                        className="mr-1 text-gray-800"
                         icon={["fas", "building-user"]}
-                        size="1x"
+                        size="lg"
                       />
                       <span>Apartamento</span>
                     </div>
                   )}
                   {propertyType.includes("Local") && (
-                    <div className="inline-flex items-center mx-1">
+                    <div className="flex items-center my-1">
                       <FontAwesomeIcon
-                        className="mr-1"
+                        className="mr-1 text-gray-800"
                         icon={["fas", "shop"]}
-                        size="1x"
+                        size="lg"
                       />
                       <span>Local</span>
                     </div>
                   )}
                   {propertyType.includes("Bodega") && (
-                    <div className="inline-flex items-center mx-1">
+                    <div className="flex items-center my-1">
                       <FontAwesomeIcon
-                        className="mr-1"
+                        className="mr-1 text-gray-800"
                         icon={["fas", "warehouse"]}
-                        size="1x"
+                        size="lg"
                       />
                       <span>Bodega</span>
                     </div>
