@@ -60,7 +60,7 @@ const PostItem = ({ postData }: Props) => {
 
         // * Metros cuadrados
         const metrosMatch = post.message.match(
-          /(\d+(?:\.\d+)?)\s*(?=m²|M2|metros\s+cuadrados|mts|de terreno|de construcci[oó]n)/i
+          /(\d+(?:\.\d+)?)\s*(?=m²|M2|metros\s+cuadrados|mts|de terreno|de construcci[oó]n|terreno)/i
         );
         const metros = metrosMatch ? parseFloat(metrosMatch[1]) : 0;
 
