@@ -19,5 +19,3 @@ function App() {
 }
 
 export default App;
-
-// ! TODO: Fix the fact that when reloading /propiedades ONLY it has an error of not found
