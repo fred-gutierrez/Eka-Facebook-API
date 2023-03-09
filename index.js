@@ -96,3 +96,7 @@ fetch(
   .catch((error) => console.error(error));
 
 app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
+
+// TODO: Revise that when something new is posted, it doesn't remove the older posts ($1600)
+
+// TODO: Make that when more than 15 posts are rendered, they're moved to a different page
