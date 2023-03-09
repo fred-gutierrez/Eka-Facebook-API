@@ -100,16 +100,14 @@ const PostItem = ({ postData }: Props) => {
               <div className="grid grid-cols-2 gap-1">
                 {post.attachments &&
                   post.attachments.data.map((attachment: any) =>
-                    attachment.subattachments.data
-                      .map((subattachment: any) => (
-                        <img
-                          src={subattachment.media.image.src}
-                          alt={`Facebook post image ${index}`}
-                          className={`h-28 md:h-40 2xl:h-44 lg:h-40
+                    attachment.subattachments.data.map((subattachment: any) => (
+                      <img
+                        src={subattachment.media.image.src}
+                        alt={`Facebook post image ${index}`}
+                        className={`h-28 md:h-40 2xl:h-44 lg:h-40
                         min-w-full rounded-lg object-cover mx-auto`}
-                        />
-                      ))
-                      .slice(1, 5)
+                      />
+                    ))
                   )}
               </div>
             </div>
