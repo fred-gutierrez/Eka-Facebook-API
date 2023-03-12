@@ -25,6 +25,7 @@ const PostItem = ({ postData }: Props) => {
         const alquilerVentaMatch = post.message.match(
           /(alquilo|alquiler|vendo|venta)/i
         );
+
         const alquilerVenta = alquilerVentaMatch
           ? alquilerVentaMatch[1].toLowerCase() === "alquilo"
             ? "Alquiler"
@@ -77,6 +78,66 @@ const PostItem = ({ postData }: Props) => {
               ? ["Residencial"]
               : [propertiesArray[0]]
           ),
+        ];
+
+        type Interior = {
+          ifStatement: number | boolean;
+          icon: any;
+          desc: string;
+          display: number;
+        };
+
+        const interiorDetails: Interior[] = [
+          {
+            ifStatement: habitaciones,
+            icon: "bed",
+            desc: ` Dormitorio${habitaciones > 1 ? "s" : ""}`,
+            display: habitaciones,
+          },
+          {
+            ifStatement: banos,
+            icon: "bath",
+            desc: ` Baño${banos > 1 ? "s" : ""}`,
+            display: banos,
+          },
+          {
+            ifStatement: metros >= 45 ? metros : false,
+            icon: "map",
+            desc: "m2",
+            display: metros,
+          },
+        ];
+
+        type Property = {
+          propType: string;
+          icon: any;
+        };
+
+        const propertiesType: Property[] = [
+          {
+            propType: "Residencial",
+            icon: "house-user",
+          },
+          {
+            propType: "Terreno",
+            icon: "mountain-sun",
+          },
+          {
+            propType: "Casa",
+            icon: "house-chimney",
+          },
+          {
+            propType: "Apartamento",
+            icon: "building-user",
+          },
+          {
+            propType: "Local",
+            icon: "shop",
+          },
+          {
+            propType: "Bodega",
+            icon: "warehouse",
+          },
         ];
 
         return (
@@ -133,102 +194,37 @@ const PostItem = ({ postData }: Props) => {
               )}
               <div className="mt-4 md:ml-5 grid grid-cols-2">
                 <div>
-                  {habitaciones ? (
-                    <div className="flex items-center my-1">
-                      <FontAwesomeIcon
-                        className="mr-1 text-gray-800"
-                        icon={["fas", `bed`]}
-                        size="lg"
-                      />
-                      <span>
-                        {habitaciones} Dormitorio{habitaciones > 1 ? "s" : ""}
-                      </span>
-                    </div>
-                  ) : null}
-                  {banos ? (
-                    <div className="flex items-center my-1">
-                      <FontAwesomeIcon
-                        className="mr-1 text-gray-800"
-                        icon={["fas", `bath`]}
-                        size="lg"
-                      />
-                      <span>
-                        {banos} Baño{banos > 1 ? "s" : ""}
-                      </span>
-                    </div>
-                  ) : null}
-                  {metros >= 45 ? (
-                    <div className="flex items-center my-1">
-                      <FontAwesomeIcon
-                        className="mr-1 text-gray-800"
-                        icon={["far", `map`]}
-                        size="lg"
-                      />
-                      <span>{metros}m2</span>
-                    </div>
-                  ) : null}
-                  {/* // * Words IF's */}
-                  {propertyType.includes("Residencial") && (
-                    <div className="flex items-center my-1">
-                      <FontAwesomeIcon
-                        className="mr-1 text-gray-800"
-                        icon={["fas", "house-user"]}
-                        size="lg"
-                      />
-                      <span>Residencial</span>
-                    </div>
+                  {interiorDetails.map((intDetails) =>
+                    intDetails.ifStatement ? (
+                      <div className="flex items-center my-1">
+                        <FontAwesomeIcon
+                          className="mr-1 text-gray-800"
+                          icon={[
+                            intDetails.ifStatement === metros ? "far" : "fas",
+                            intDetails.icon,
+                          ]}
+                          size="lg"
+                        />
+                        <span>
+                          {intDetails.display}
+                          {intDetails.desc}
+                        </span>
+                      </div>
+                    ) : null
                   )}
-                  {propertyType.includes("Terreno") && (
-                    <div className="flex items-center my-1">
-                      <FontAwesomeIcon
-                        className="mr-1 text-gray-800"
-                        icon={["fas", "mountain-sun"]}
-                        size="lg"
-                      />
-                      <span>Terreno</span>
-                    </div>
+                  {propertiesType.map(
+                    (property) =>
+                      propertyType.includes(property.propType) && (
+                        <div className="flex items-center my-1">
+                          <FontAwesomeIcon
+                            className="mr-1 text-gray-800"
+                            icon={["fas", property.icon]}
+                            size="lg"
+                          />
+                          <span>{property.propType}</span>
+                        </div>
+                      )
                   )}
-                  {propertyType.includes("Casa") && (
-                    <div className="flex items-center my-1">
-                      <FontAwesomeIcon
-                        className="mr-1 text-gray-800"
-                        icon={["fas", "house-chimney"]}
-                        size="lg"
-                      />
-                      <span>Casa</span>
-                    </div>
-                  )}
-                  {propertyType.includes("Apartamento") && (
-                    <div className="flex items-center my-1">
-                      <FontAwesomeIcon
-                        className="mr-1 text-gray-800"
-                        icon={["fas", "building-user"]}
-                        size="lg"
-                      />
-                      <span>Apartamento</span>
-                    </div>
-                  )}
-                  {propertyType.includes("Local") && (
-                    <div className="flex items-center my-1">
-                      <FontAwesomeIcon
-                        className="mr-1 text-gray-800"
-                        icon={["fas", "shop"]}
-                        size="lg"
-                      />
-                      <span>Local</span>
-                    </div>
-                  )}
-                  {propertyType.includes("Bodega") && (
-                    <div className="flex items-center my-1">
-                      <FontAwesomeIcon
-                        className="mr-1 text-gray-800"
-                        icon={["fas", "warehouse"]}
-                        size="lg"
-                      />
-                      <span>Bodega</span>
-                    </div>
-                  )}
-                  {/* // * Words IF's Ending */}
                 </div>
                 <div className="text-center">
                   <a
