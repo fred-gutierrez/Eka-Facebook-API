@@ -97,6 +97,8 @@ fetch(
 
 app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
 
+// TODO: Fix the fact that facebook images expire after a few days (URL signature expired) - https://stackoverflow.com/questions/30477877/facebook-image-url-gets-expired
+
 // TODO: Revise that when something new is posted, it doesn't remove the older posts ($1600)
 
 // TODO: Make that when more than 15 posts are rendered, they're moved to a different page
