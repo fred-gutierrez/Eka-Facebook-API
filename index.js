@@ -10,7 +10,6 @@ try {
   console.warn("No existing data found.");
 }
 
-// ? It fetches
 const fetchData = async () => {
   fetch(
     `https://graph.facebook.com/me?fields=posts{message,full_picture,attachments{subattachments{media{image{src}}}}}&access_token=${process.env.FACEBOOK_ACCESS_TOKEN}`
@@ -19,31 +18,30 @@ const fetchData = async () => {
     .then((data) => {
       const newPosts = [];
       data.posts?.data?.forEach((post) => {
-        // Check if post ID already exists in the existing data
+        // * Check if post ID already exists in the existing data
         const existingPost = existingData.find((p) => p.id === post.id);
         if (existingPost) {
-          // If post already exists, update it with new data
+          // * If post already exists, update it with new data
           Object.assign(existingPost, post);
         } else {
-          // If post is new, add it to the newPosts array
-          newPosts.push(post);
+          // * If post is new, add it to the newPosts array
+          newPosts.unshift(post);
         }
 
-        // Modify the post's attachments
-        if (post.attachments && post.attachments.data.length > 0) {
-          post.attachments.data.forEach((attachment) => {
+        // * Modify the post's attachments
+        const postAttachments = post.attachments;
+        if (postAttachments && postAttachments.data.length > 0) {
+          postAttachments.data.forEach((attachment) => {
             let firstImage;
             if (attachment.media && attachment.media.image) {
               firstImage = attachment.media.image.src;
               delete attachment.media.image;
             }
 
-            if (
-              attachment.subattachments &&
-              attachment.subattachments.data.length > 0
-            ) {
-              const subattachments = attachment.subattachments.data.slice(1, 5);
-              subattachments.forEach((subAttachment) => {
+            const postSubAttachments = attachment.subattachments;
+            if (postSubAttachments && postSubAttachments.data.length > 0) {
+              const slicedSubAttachments = postSubAttachments.data.slice(1, 5);
+              slicedSubAttachments.forEach((subAttachment) => {
                 if (subAttachment.media && subAttachment.media.image) {
                   subAttachment.media.image.src =
                     subAttachment.media.image.src.replace(
@@ -53,7 +51,7 @@ const fetchData = async () => {
                 }
               });
               if (firstImage) {
-                subattachments.unshift({
+                slicedSubAttachments.unshift({
                   media: {
                     image: {
                       src: firstImage.replace(/^http:\/\//i, "https://"),
@@ -61,13 +59,13 @@ const fetchData = async () => {
                   },
                 });
               }
-              attachment.subattachments.data = subattachments;
+              postSubAttachments.data = slicedSubAttachments;
             }
           });
         }
       });
 
-      const filteredData = Object.values(existingData.concat(newPosts)).filter(
+      const filteredData = Object.values([...newPosts, ...existingData]).filter(
         (post) => {
           const words = post.message?.split(" ");
           return words?.length >= 15;
