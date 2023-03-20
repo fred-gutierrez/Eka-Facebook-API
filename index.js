@@ -12,7 +12,7 @@ try {
 
 const fetchData = async () => {
   fetch(
-    `https://graph.facebook.com/me?fields=posts{message,full_picture,attachments{subattachments{media{image{src}}}}}&access_token=${process.env.FACEBOOK_ACCESS_TOKEN}`
+    `https://graph.facebook.com/me?fields=posts{message,attachments{subattachments{media{image{src}}}}}&access_token=${process.env.FACEBOOK_ACCESS_TOKEN}`
   )
     .then((res) => res.json())
     .then((data) => {
@@ -40,7 +40,7 @@ const fetchData = async () => {
 
             const postSubAttachments = attachment.subattachments;
             if (postSubAttachments && postSubAttachments.data.length > 0) {
-              const slicedSubAttachments = postSubAttachments.data.slice(1, 5);
+              const slicedSubAttachments = postSubAttachments.data.slice(0, 5);
               slicedSubAttachments.forEach((subAttachment) => {
                 if (subAttachment.media && subAttachment.media.image) {
                   subAttachment.media.image.src =
@@ -92,4 +92,4 @@ fetchData();
 
 // TODO: Fix the fact that facebook images expire after a few days (URL signature expired) - https://stackoverflow.com/questions/30477877/facebook-image-url-gets-expired
 
-// TODO: Make that when more than 15 posts are rendered, they're moved to a different page
+// TODO: Make that when more than 10 posts are rendered, they're moved to a different page

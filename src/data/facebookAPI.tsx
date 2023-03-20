@@ -17,7 +17,6 @@ export interface Post {
     }[];
   };
   message: string;
-  full_picture: string;
   id: string;
 }
 

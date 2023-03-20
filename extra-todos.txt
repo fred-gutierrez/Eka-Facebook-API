@@ -1,3 +1,5 @@
-1 - When the hamburger icon/menu is clicked, it should close when clicked outside or when clicking an option in the menu
-2 - When more than 10 posts are shown in a page, a new page will automatically be created holding the other posts
-3 - Fix the fact that facebook images expire after a few days (URL signature expired) - https://stackoverflow.com/questions/30477877/facebook-image-url-gets-expired
+1 - When the hamburger icon/menu is clicked, it should close when clicked outside
+
+2 - On each image, when clicked, a carousel zooming in should appear with the options to move through the images
+
+3 - Add a close "x" button to close the carousel and add the ability to close the carousel when clicked outside

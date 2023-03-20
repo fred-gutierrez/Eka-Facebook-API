@@ -12,7 +12,7 @@ const PostItem = ({ postData }: Props) => {
         // * Price
         const price = post.message.match(
           /(\$|₡)\d{1,4}(,\d{3})*(\.\d{3})*(\.\d+)?/g
-        );
+        )!;
 
         // * Title
         const title = post.message.substring(0, post.message.indexOf("\n"));
@@ -153,24 +153,32 @@ const PostItem = ({ postData }: Props) => {
             xl:mx-auto rounded-xl`}
           >
             <div className="grid grid-cols-2 gap-1">
-              <img
-                src={post.full_picture}
-                alt={`Facebook post main image`}
-                className={`h-52 min-w-full min-h-full object-cover rounded-lg`}
-              />
-              <div className="grid grid-cols-2 gap-1">
-                {post.attachments &&
-                  post.attachments.data.map((attachment: any) =>
-                    attachment.subattachments.data.map((subattachment: any) => (
-                      <img
-                        src={subattachment.media.image.src}
-                        alt={`Facebook post image ${index}`}
-                        className={`h-28 md:h-40 2xl:h-44 lg:h-40
-                        min-w-full rounded-lg object-cover mx-auto`}
-                      />
-                    ))
-                  )}
-              </div>
+              {post.attachments &&
+                post.attachments.data.map((attachment: any) => (
+                  <img
+                    src={
+                      attachment.subattachments.data.slice(0, 1)[0]?.media
+                        ?.image?.src
+                    }
+                    alt={`Facebook post main image`}
+                    className={`h-52 min-w-full min-h-full object-cover rounded-lg`}
+                  />
+                ))}
+              {post.attachments &&
+                post.attachments.data.map((attachment: any) => (
+                  <div className="grid grid-cols-2 gap-1">
+                    {attachment.subattachments.data
+                      .slice(1, 5)
+                      .map((subattachment: any, index: number) => (
+                        <img
+                          src={subattachment.media.image.src}
+                          alt={`Facebook post image ${index}`}
+                          className={`h-28 md:h-40 2xl:h-44 lg:h-40
+                          min-w-full rounded-lg object-cover mx-auto`}
+                        />
+                      ))}
+                  </div>
+                ))}
             </div>
             <div>
               <div className="mt-4 md:ml-5 grid grid-cols-2">
