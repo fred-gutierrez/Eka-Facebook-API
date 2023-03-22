@@ -58,20 +58,17 @@ const fetchData = async () => {
                   }
                   const imagePath = `./images/${post.id}/${filename}`;
 
-                  await download(imageUrl).then((data) => {
-                    fs.writeFileSync(imagePath, data);
-                  });
+                  if (!fs.existsSync(imagePath)) {
+                    await download(imageUrl).then((data) => {
+                      fs.writeFileSync(imagePath, data);
+                    });
+                  } else {
+                    console.log(
+                      `Image ${imagePath} already exists. Skipping download.`
+                    );
+                  }
 
                   subAttachment.media.image.src = imagePath;
-
-                  if (fs.existsSync(imagePath)) {
-                    console.log(`Image ${filename} already exists.`);
-                    return;
-                  }
-
-                  if (!fs.existsSync(folderPath)) {
-                    fs.mkdirSync(folderPath, { recursive: true });
-                  }
 
                   const image = await axios({
                     method: "get",
