@@ -52,11 +52,12 @@ const fetchData = async () => {
                     imageUrl.lastIndexOf("/") + 1,
                     imageUrl.lastIndexOf("?")
                   );
-                  const folderPath = `./images/${post.id}/`;
+                  const folderPath = `./public/images/${post.id}/`;
                   if (!fs.existsSync(folderPath)) {
                     fs.mkdirSync(folderPath, { recursive: true });
                   }
-                  const imagePath = `./images/${post.id}/${filename}`;
+                  const imagePath = `./public/images/${post.id}/${filename}`;
+                  const imagePathPublic = `./images/${post.id}/${filename}`;
 
                   if (!fs.existsSync(imagePath)) {
                     await download(imageUrl).then((data) => {
@@ -68,7 +69,7 @@ const fetchData = async () => {
                     );
                   }
 
-                  subAttachment.media.image.src = imagePath;
+                  subAttachment.media.image.src = imagePathPublic;
 
                   const image = await axios({
                     method: "get",
