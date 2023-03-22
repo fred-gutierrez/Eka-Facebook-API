@@ -1,5 +1,7 @@
 import dotenv from "dotenv";
 import fs from "fs";
+import download from "download";
+import axios from "axios";
 
 dotenv.config();
 
@@ -10,21 +12,22 @@ try {
   console.warn("No existing data found.");
 }
 
+if (!fs.existsSync("./images")) {
+  fs.mkdirSync("./images");
+}
+
 const fetchData = async () => {
-  fetch(
+  await fetch(
     `https://graph.facebook.com/me?fields=posts{message,attachments{subattachments{media{image{src}}}}}&access_token=${process.env.FACEBOOK_ACCESS_TOKEN}`
   )
     .then((res) => res.json())
     .then((data) => {
       const newPosts = [];
       data.posts?.data?.forEach((post) => {
-        // * Check if post ID already exists in the existing data
         const existingPost = existingData.find((p) => p.id === post.id);
         if (existingPost) {
-          // * If post already exists, update it with new data
           Object.assign(existingPost, post);
         } else {
-          // * If post is new, add it to the newPosts array
           newPosts.unshift(post);
         }
 
@@ -32,33 +35,62 @@ const fetchData = async () => {
         const postAttachments = post.attachments;
         if (postAttachments && postAttachments.data.length > 0) {
           postAttachments.data.forEach((attachment) => {
-            let firstImage;
-            if (attachment.media && attachment.media.image) {
-              firstImage = attachment.media.image.src;
-              delete attachment.media.image;
-            }
-
             const postSubAttachments = attachment.subattachments;
             if (postSubAttachments && postSubAttachments.data.length > 0) {
               const slicedSubAttachments = postSubAttachments.data.slice(0, 5);
-              slicedSubAttachments.forEach((subAttachment) => {
+              slicedSubAttachments.forEach(async (subAttachment) => {
                 if (subAttachment.media && subAttachment.media.image) {
                   subAttachment.media.image.src =
                     subAttachment.media.image.src.replace(
                       /^http:\/\//i,
                       "https://"
                     );
+
+                  // * Download Image
+                  const imageUrl = subAttachment.media.image.src;
+                  const filename = imageUrl.substring(
+                    imageUrl.lastIndexOf("/") + 1,
+                    imageUrl.lastIndexOf("?")
+                  );
+                  const folderPath = `./images/${post.id}/`;
+                  if (!fs.existsSync(folderPath)) {
+                    fs.mkdirSync(folderPath, { recursive: true });
+                  }
+                  const imagePath = `./images/${post.id}/${filename}`;
+
+                  await download(imageUrl).then((data) => {
+                    fs.writeFileSync(imagePath, data);
+                  });
+
+                  subAttachment.media.image.src = imagePath;
+
+                  if (fs.existsSync(imagePath)) {
+                    console.log(`Image ${filename} already exists.`);
+                    return;
+                  }
+
+                  if (!fs.existsSync(folderPath)) {
+                    fs.mkdirSync(folderPath, { recursive: true });
+                  }
+
+                  const image = await axios({
+                    method: "get",
+                    url: imageUrl,
+                    responseType: "stream",
+                  });
+
+                  const writer = fs.createWriteStream(imagePath);
+                  image.data.pipe(writer);
+
+                  writer.on("finish", () => {
+                    console.log(`Image saved to ${imagePath}`);
+                  });
+
+                  writer.on("error", (err) => {
+                    console.error(`Error saving image: ${err}`);
+                  });
                 }
               });
-              if (firstImage) {
-                slicedSubAttachments.unshift({
-                  media: {
-                    image: {
-                      src: firstImage.replace(/^http:\/\//i, "https://"),
-                    },
-                  },
-                });
-              }
               postSubAttachments.data = slicedSubAttachments;
             }
           });
@@ -89,7 +121,5 @@ const fetchData = async () => {
 };
 
 fetchData();
-
-// TODO: Fix the fact that facebook images expire after a few days (URL signature expired) - https://stackoverflow.com/questions/30477877/facebook-image-url-gets-expired
 
 // TODO: Make that when more than 10 posts are rendered, they're moved to a different page
