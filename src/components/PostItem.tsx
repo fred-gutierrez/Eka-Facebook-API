@@ -10,9 +10,14 @@ const PostItem = ({ postData }: Props) => {
     <ul>
       {postData.map((post: Post, index: number) => {
         // * Price
-        const price = post.message.match(
+        const price: RegExpMatchArray | null = post.message.match(
           /(\$|₡)\d{1,4}(,\d{3})*(\.\d{3})*(\.\d+)?/g
         )!;
+
+        let highestPrice: string = "";
+        for (let i = 0; i < price.length; i++) {
+          highestPrice = price[i];
+        }
 
         // * Title
         const title = post.message.substring(0, post.message.indexOf("\n"));
@@ -184,7 +189,9 @@ const PostItem = ({ postData }: Props) => {
               <div className="mt-4 md:ml-5 grid grid-cols-2">
                 <h1 className={`text-lg md:text-xl`}>{title}</h1>
                 <div className="mx-auto">
-                  <h1 className={`text-xl sm:text-2xl font-bold`}>{price}</h1>
+                  <h1 className={`text-xl sm:text-2xl font-bold`}>
+                    {highestPrice}
+                  </h1>
                   <h1 className={`text-lg text-center font-light`}>
                     {alquilerVenta}
                   </h1>
