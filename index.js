@@ -24,7 +24,9 @@ const fetchData = async () => {
     .then((data) => {
       const newPosts = [];
       data.posts?.data?.forEach((post) => {
-        const existingPost = existingData.find((p) => p.id === post.id);
+        const existingPost = existingData.find(
+          (p) => p.id === post.id || p.message === post.message
+        );
         if (existingPost) {
           Object.assign(existingPost, post);
         } else {
@@ -68,6 +70,7 @@ const fetchData = async () => {
                       `Image ${imagePath} already exists. Skipping download.`
                     );
                   }
+                  // TODO: Make that in order to add to the .json the new downloaded images path
 
                   subAttachment.media.image.src = imagePathPublic;
 
