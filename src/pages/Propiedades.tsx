@@ -1,9 +1,9 @@
-import FacebookPosts from "../data/facebookAPI";
+import FacebookPosts from "../data/FacebookPosts";
 
 export default function Propiedades() {
   return (
-    <div>
+    <>
       <FacebookPosts />
-    </div>
+    </>
   );
 }
