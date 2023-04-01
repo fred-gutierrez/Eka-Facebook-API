@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Post } from "../data/FacebookPosts";
+import { Post } from "../pages/Propiedades";
 
 interface Props {
   postData: Post[];
