@@ -24,25 +24,26 @@ export interface Post {
 
 const Propiedades = () => {
   const [postData, setPostData] = useState<Post[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [postPerPage, setPostPerPage] = useState(10);
 
   useEffect(() => {
     setPostData(postsData);
   }, []);
 
+  const lastPostIndex = currentPage * postPerPage;
+  const firstPostIndex = lastPostIndex - postPerPage;
+  const currentPosts = postData.slice(firstPostIndex, lastPostIndex);
+
   return (
     <>
-      <Routes>
-        <Route path="/" element={<PostItem postData={postData} />} />
-        {/* <Route
-          path="/1"
-          element={<PostItem postData={postData.slice(10, 20)} />}
-        />
-        <Route
-          path="/2"
-          element={<PostItem postData={postData.slice(20, 30)} />}
-        /> */}
-      </Routes>
-      {/* <Pagination /> */}
+      <PostItem postData={currentPosts} />
+      <Pagination
+        totalPosts={postData.length}
+        postsPerPage={postPerPage}
+        setCurrentPage={setCurrentPage}
+        currentPage={currentPage}
+      />
     </>
   );
 };
