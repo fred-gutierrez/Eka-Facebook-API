@@ -1,18 +1,33 @@
+import { useEffect, useRef } from "react";
 import EkaLogo from "../images/eka-logo-transparent1.png";
 import { NavLink } from "react-router-dom";
 
 export default function Navbar() {
+  const navbarRef = useRef<HTMLDivElement>(null);
+
   function toggleHidden() {
     const navbarHamburger = document.getElementById("navbar-menu");
     navbarHamburger!.classList.toggle("hidden");
   }
 
-  function handleNavLinkClick() {
-    toggleHidden();
+  function handleClickOutside(e: Event): void {
+    if (navbarRef.current && !navbarRef.current.contains(e.target as Node)) {
+      const navbarHamburger = document.getElementById("navbar-menu");
+      navbarHamburger!.classList.add("hidden");
+    }
   }
 
+  useEffect(() => {
+    document.addEventListener("click", handleClickOutside);
+    document.addEventListener("scroll", handleClickOutside);
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+      document.removeEventListener("scroll", handleClickOutside);
+    };
+  }, [handleClickOutside]);
+
   return (
-    <nav className="p-3 sticky sky top-0 silver">
+    <nav className="p-3 sticky sky top-0 silver" ref={navbarRef}>
       <div className="container flex flex-wrap items-center justify-between mx-auto">
         <a href="/" className="flex items-center">
           <img src={EkaLogo} className="h-12 ml-3 sm:h-14" alt="Eka Logo" />
@@ -46,7 +61,7 @@ export default function Navbar() {
           <ul className="flex flex-col mt-4 rounded-lg md:flex-row md:space-x-8 md:mt-0 md:text-md md:font-medium md:border-0 bg-gray-200 md:bg-transparent border-gray-300">
             <NavLink
               to="/"
-              onClick={handleNavLinkClick}
+              onClick={() => toggleHidden()}
               className={({ isActive }) =>
                 (isActive ? "text-black " : "text-gray-400 hover:text-black ") +
                 "py-2 pl-3 pr-4 md:p-0 rounded md:border-0 hover:bg-gray-300 md:hover:bg-transparent hover:underline"
@@ -56,7 +71,7 @@ export default function Navbar() {
             </NavLink>
             <NavLink
               to="/propiedades"
-              onClick={handleNavLinkClick}
+              onClick={() => toggleHidden()}
               className={({ isActive }) =>
                 (isActive ? "text-black " : "text-gray-400 hover:text-black ") +
                 "py-2 pl-3 pr-4 md:p-0 rounded md:border-0 hover:bg-gray-300 md:hover:bg-transparent hover:underline"
