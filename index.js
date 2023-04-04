@@ -70,7 +70,7 @@ const fetchData = async () => {
                       `Image ${imagePath} already exists. Skipping download.`
                     );
                   }
-                  // TODO: Make that in order to add to the .json the new downloaded images path
+                  // TODO: When the images are downloaded, the .json should be updated immediately (Not having to run it twice)
 
                   subAttachment.media.image.src = imagePathPublic;
 
@@ -122,5 +122,3 @@ const fetchData = async () => {
 };
 
 fetchData();
-
-// TODO: Make that when more than 10 posts are rendered, they're moved to a different page
