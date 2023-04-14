@@ -1,5 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Post } from "../pages/Propiedades";
+import { useState } from "react";
 
 interface Props {
   postData: Post[];
@@ -10,9 +11,20 @@ const PostItem = ({ postData }: Props) => {
     <ul>
       {postData.map((post: Post, index: number) => {
         // * Price
-        const price: RegExpMatchArray | null = post.message.match(
-          /(\$|₡)\d{1,4}(,\d{3})*(\.\d{3})*(\.\d+)?/g
-        )!;
+        const priceMatch: RegExpMatchArray | null = post.message.match(
+          /(\$|₡)\d{1,4}(,\d{3})*(\.\d{3})*(\.\d+)?\s*(mil(?=[\s,]|$))?/g
+        );
+
+        const price: string[] = priceMatch
+          ? priceMatch.map((match) => {
+              let cleanPrice = match.trim();
+              if (cleanPrice.match(/mil(?=[\s,]|$)/)) {
+                cleanPrice = cleanPrice.replace(/\s?mil(?=[\s,]|$)\b/g, ".000");
+              }
+              return cleanPrice;
+            })
+          : [];
+        // TODO: Add the variable "₡230.000mil" - Remove the mil/.000
 
         let highestPrice: string = "";
         for (let i = 0; i < price.length; i++) {
@@ -145,6 +157,18 @@ const PostItem = ({ postData }: Props) => {
           },
         ];
 
+        const [selectedImage, setSelectedImage] = useState<number | null>(null);
+        const [carouselVisible, setCarouselVisible] = useState(false);
+
+        const showCarousel = (index: number) => {
+          setSelectedImage(index);
+          setCarouselVisible(true);
+        };
+        const hideCarousel = () => {
+          setSelectedImage(null);
+          setCarouselVisible(false);
+        };
+
         return (
           <li
             key={index}
@@ -159,32 +183,76 @@ const PostItem = ({ postData }: Props) => {
           >
             <div className="grid grid-cols-2 gap-1">
               {post.attachments &&
-                post.attachments.data.map((attachment: any) => (
-                  <img
-                    src={
-                      attachment.subattachments.data.slice(0, 1)[0]?.media
-                        ?.image?.src
-                    }
-                    alt={`Facebook post main image`}
-                    className={`h-52 min-w-full min-h-full object-cover rounded-lg`}
-                  />
-                ))}
-              {post.attachments &&
-                post.attachments.data.map((attachment: any) => (
-                  <div className="grid grid-cols-2 gap-1">
-                    {attachment.subattachments.data
-                      .slice(1, 5)
-                      .map((subattachment: any, index: number) => (
-                        <img
-                          src={subattachment.media.image.src}
-                          alt={`Facebook post image ${index}`}
-                          className={`h-28 md:h-40 2xl:h-44 lg:h-40
+                post.attachments.data.map((attachment: any, index: number) => (
+                  <>
+                    <img
+                      src={
+                        attachment.subattachments.data.slice(0, 1)[0]?.media
+                          ?.image?.src
+                      }
+                      alt={`Facebook post main image`}
+                      className={`h-52 min-w-full min-h-full object-cover rounded-lg`}
+                      onClick={() => showCarousel(index)}
+                    />
+                    <div className="grid grid-cols-2 gap-1">
+                      {attachment.subattachments.data
+                        .slice(1, 5)
+                        .map((subattachment: any, index: number) => (
+                          <img
+                            src={subattachment.media.image.src}
+                            alt={`Facebook post image ${index}`}
+                            className={`h-28 md:h-40 2xl:h-44 lg:h-40
                           min-w-full rounded-lg object-cover mx-auto`}
-                        />
-                      ))}
-                  </div>
+                            onClick={() => showCarousel(index)}
+                          />
+                        ))}
+                    </div>
+                  </>
                 ))}
             </div>
+            {/* // TODO: Create Carousel showcasing other images when clicked */}
+            {/* {carouselVisible && (
+              <div className="fixed top-0 left-0 w-screen h-screen bg-gray-900 bg-opacity-50 flex items-center justify-center">
+                <div className="relative">
+                  <img
+                    src={post.attachments.data[selectedImage!].src}
+                    alt={post.attachments.data[selectedImage!].alt}
+                  />
+                  <div className="absolute top-0 bottom-0 left-0 w-1/2 flex items-center justify-center">
+                    <button
+                      className="text-white text-4xl"
+                      onClick={() =>
+                        setSelectedImage((prev) =>
+                          prev === 0
+                            ? post.attachments.data.length - 1
+                            : prev! - 1
+                        )
+                      }
+                    >
+                      <FontAwesomeIcon icon={["fab", "arrow-left"]} />
+                    </button>
+                  </div>
+                  <div className="absolute top-0 bottom-0 right-0 w-1/2 flex items-center justify-center">
+                    <button
+                      className="text-white text-4xl"
+                      onClick={() =>
+                        setSelectedImage((prev) =>
+                          prev === images.length - 1 ? 0 : prev! + 1
+                        )
+                      }
+                    >
+                      <FontAwesomeIcon icon={["fab", "arrow-right"]} />
+                    </button>
+                  </div>
+                  <button
+                    className="absolute top-0 right-0 text-white text-2xl m-4"
+                    onClick={hideCarousel}
+                  >
+                    Close
+                  </button>
+                </div>
+              </div>
+            )} */}
             <div>
               <div className="mt-4 md:ml-5 grid grid-cols-2">
                 <h1 className={`text-lg md:text-xl`}>{title}</h1>

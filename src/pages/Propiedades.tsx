@@ -29,9 +29,9 @@ const Propiedades = () => {
 
   useEffect(() => {
     setPostData(postsData);
-  }, []);
+  }, [postData]);
 
-  const lastPostIndex = currentPage * postPerPage;
+  const lastPostIndex = Math.min(currentPage * postPerPage, postData.length);
   const firstPostIndex = lastPostIndex - postPerPage;
   const currentPosts = postData.slice(firstPostIndex, lastPostIndex);
 
