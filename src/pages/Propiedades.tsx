@@ -3,24 +3,7 @@ import PostItem from "../components/PostItem";
 import postsData from "../data/postsData.json";
 import Pagination from "../components/Pagination";
 import { Route, Routes } from "react-router-dom";
-
-export interface Post {
-  attachments: {
-    data: {
-      subattachments: {
-        data: {
-          media: {
-            image: {
-              src: string;
-            };
-          };
-        }[];
-      };
-    }[];
-  };
-  message: string;
-  id: string;
-}
+import { Post } from "../types/postTypes";
 
 const Propiedades = () => {
   const [postData, setPostData] = useState<Post[]>([]);

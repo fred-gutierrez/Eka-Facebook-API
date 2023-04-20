@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Post } from "../pages/Propiedades";
 import { useState } from "react";
+import { Interior, Post, Property } from "../types/postTypes";
 
 interface Props {
   postData: Post[];
@@ -98,13 +98,6 @@ const PostItem = ({ postData }: Props) => {
           ),
         ];
 
-        type Interior = {
-          ifStatement: number | boolean;
-          icon: any;
-          desc: string;
-          display: number;
-        };
-
         const interiorDetails: Interior[] = [
           {
             ifStatement: habitaciones,
@@ -125,11 +118,6 @@ const PostItem = ({ postData }: Props) => {
             display: metros,
           },
         ];
-
-        type Property = {
-          propType: string;
-          icon: any;
-        };
 
         const propertiesType: Property[] = [
           {
@@ -158,19 +146,17 @@ const PostItem = ({ postData }: Props) => {
           },
         ];
 
-        const [selectedImage, setSelectedImage] = useState<number | null>(null);
-        const [carouselVisible, setCarouselVisible] = useState(false);
-        const [selectedSubIndex, setSelectedSubIndex] = useState(0);
+        // const [currentImage, setCurrentImage] = useState(0);
+        // const [isOpen, setIsOpen] = useState(false);
 
-        const showCarousel = (mainIndex: number, subIndex: number) => {
-          setSelectedImage(mainIndex);
-          setSelectedSubIndex(subIndex);
-          setCarouselVisible(true);
-        };
-        const hideCarousel = () => {
-          setSelectedImage(null);
-          setCarouselVisible(false);
-        };
+        // function closeModal() {
+        //   setIsOpen(false);
+        // }
+
+        // function openModal(i: number) {
+        //   setCurrentImage(i);
+        //   setIsOpen(true);
+        // }
 
         return (
           <li
@@ -197,7 +183,6 @@ const PostItem = ({ postData }: Props) => {
                         src={mainImage}
                         alt={`Facebook post main image`}
                         className={`h-52 min-w-full min-h-full object-cover rounded-lg`}
-                        onClick={() => showCarousel(attachment, mainIndex)}
                       />
                       <div className="grid grid-cols-2 gap-1">
                         {subattachments.data
@@ -213,9 +198,6 @@ const PostItem = ({ postData }: Props) => {
                                 alt={`Facebook post image ${index}`}
                                 className={`h-28 md:h-40 2xl:h-44 lg:h-40
                           min-w-full rounded-lg object-cover mx-auto`}
-                                onClick={() =>
-                                  showCarousel(attachment, mainIndex)
-                                }
                               />
                             )
                           )}
