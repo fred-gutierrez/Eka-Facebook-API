@@ -146,18 +146,6 @@ const PostItem = ({ postData }: Props) => {
           },
         ];
 
-        // const [currentImage, setCurrentImage] = useState(0);
-        // const [isOpen, setIsOpen] = useState(false);
-
-        // function closeModal() {
-        //   setIsOpen(false);
-        // }
-
-        // function openModal(i: number) {
-        //   setCurrentImage(i);
-        //   setIsOpen(true);
-        // }
-
         return (
           <li
             key={index}
@@ -187,20 +175,14 @@ const PostItem = ({ postData }: Props) => {
                       <div className="grid grid-cols-2 gap-1">
                         {subattachments.data
                           .slice(1, 5)
-                          .map(
-                            (
-                              subattachment: any,
-                              mainIndex: number,
-                              subIndex: number
-                            ) => (
-                              <img
-                                src={subattachment.media.image.src}
-                                alt={`Facebook post image ${index}`}
-                                className={`h-28 md:h-40 2xl:h-44 lg:h-40
+                          .map((subattachment: any) => (
+                            <img
+                              src={subattachment.media.image.src}
+                              alt={`Facebook post image ${index}`}
+                              className={`h-28 md:h-40 2xl:h-44 lg:h-40
                           min-w-full rounded-lg object-cover mx-auto`}
-                              />
-                            )
-                          )}
+                            />
+                          ))}
                       </div>
                     </>
                   );
