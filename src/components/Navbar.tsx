@@ -27,7 +27,7 @@ export default function Navbar() {
   }, [handleClickOutside]);
 
   return (
-    <nav className="p-3 sticky sky top-0 silver" ref={navbarRef}>
+    <nav className="p-3 sticky sky top-0 silver z-10" ref={navbarRef}>
       <div className="container flex flex-wrap items-center justify-between mx-auto">
         <a href="/" className="flex items-center">
           <img src={EkaLogo} className="h-12 ml-3 sm:h-14" alt="Eka Logo" />
