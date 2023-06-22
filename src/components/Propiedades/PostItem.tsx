@@ -1,6 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useState } from "react";
-import { Interior, Post, Property } from "../types/postTypes";
+import { Interior, Post, Property } from "../../types/postTypes";
 
 interface Props {
   postData: Post[];
@@ -254,7 +253,7 @@ const PostItem = ({ postData }: Props) => {
                     <button
                       className={`bg-orange-500 hover:bg-orange-400 text-white 
                 font-bold py-2 px-4 border-b-4 border-orange-700 hover:border-orange-500 
-                rounded w-32`}
+                rounded w-32 hover:animate-pulse`}
                     >
                       Ver Detalles
                     </button>
