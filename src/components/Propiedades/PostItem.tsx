@@ -11,7 +11,7 @@ const PostItem = ({ postData }: Props) => {
       {postData.map((post: Post, index: number) => {
         // * Price
         const priceMatch: RegExpMatchArray | null = post.message.match(
-          /(\$|₡)\d{1,4}(,\d{3})*(\.\d{3})*(\.\d+)?\s*(mil(?=[\s,]|$))?/g
+          /(\$|₡|¢)\d{1,4}(,\d{3})*(\.\d{3})*(\.\d+)?\s*(mil(?=[\s,]|$))?/g
         );
 
         const price: string[] = priceMatch
