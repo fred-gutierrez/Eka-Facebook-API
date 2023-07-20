@@ -1,0 +1,5 @@
+1 - On the Recently Added component, detect Casas, Apartamentos and Bodegas with their respective name and post.
+
+2 - On each image, when clicked, a carousel zooming in should appear with the options to move through the images
+
+3 - Add a close "x" button to close the carousel and add the ability to close the carousel when clicked outside

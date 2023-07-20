@@ -206,7 +206,6 @@ export default function RecentlyAdded({ postData }: Props) {
                       }
                     )}
                   </div>
-                  {/* // TODO: Create Carousel showcasing other images when clicked */}
                   <div>
                     <div className="mt-4 md:ml-5 grid grid-cols-2">
                       <h1 className={`text-lg md:text-xl`}>{title}</h1>

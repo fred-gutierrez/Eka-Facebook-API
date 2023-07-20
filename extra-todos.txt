@@ -1,3 +1,0 @@
-1 - On each image, when clicked, a carousel zooming in should appear with the options to move through the images
-
-2 - Add a close "x" button to close the carousel and add the ability to close the carousel when clicked outside

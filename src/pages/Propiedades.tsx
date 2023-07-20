@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import PostItem from "../components/Propiedades/PostItem";
 import postsData from "../data/postsData.json";
 import Pagination from "../components/Propiedades/Pagination";
-import { Route, Routes } from "react-router-dom";
 import { Post } from "../types/postTypes";
 
 const Propiedades = () => {

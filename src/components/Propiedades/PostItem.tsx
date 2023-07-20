@@ -17,13 +17,17 @@ const PostItem = ({ postData }: Props) => {
         const price: string[] = priceMatch
           ? priceMatch.map((match) => {
               let cleanPrice = match.trim();
-              if (cleanPrice.match(/mil(?=[\s,]|$)/)) {
+              if (
+                cleanPrice.match(/mil(?=[\s,]|$)/) &&
+                !cleanPrice.includes(".000")
+              ) {
                 cleanPrice = cleanPrice.replace(/\s?mil(?=[\s,]|$)\b/g, ".000");
+              } else {
+                cleanPrice = cleanPrice.replace(/\s?mil(?=[\s,]|$)\b/g, "");
               }
               return cleanPrice;
             })
           : [];
-        // TODO: Add the variable "₡230.000mil" - Remove the mil/.000
 
         let highestPrice: string = "";
         for (let i = 0; i < price.length; i++) {
@@ -42,12 +46,22 @@ const PostItem = ({ postData }: Props) => {
           /(alquil[oó]|alquiler|vendo|venta)/i
         );
 
-        const alquilerVenta = alquilerVentaMatch
-          ? alquilerVentaMatch[1].toLowerCase() === "alquilo" ||
-            alquilerVentaMatch[1].toLowerCase() === "alquiló"
-            ? "Alquiler"
-            : "Venta"
-          : null;
+        let alquilerVenta = null;
+
+        if (alquilerVentaMatch) {
+          const matchValue = alquilerVentaMatch[1].toLowerCase();
+          switch (matchValue) {
+            case "alquilo":
+            case "alquiló":
+            case "alquiler":
+              alquilerVenta = "Alquiler";
+              break;
+            case "vendo":
+            case "venta":
+              alquilerVenta = "Venta";
+              break;
+          }
+        }
 
         // * Baños and Habitaciones
         function parseSpanishNumber(numberString: string) {
