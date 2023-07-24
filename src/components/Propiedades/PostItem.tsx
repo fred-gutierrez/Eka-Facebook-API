@@ -31,7 +31,10 @@ const PostItem = ({ postData }: Props) => {
 
         let highestPrice: string = "";
         for (let i = 0; i < price.length; i++) {
-          highestPrice = price[i];
+          price[i].startsWith("$") && parseFloat(price[i].substring(1)) > 450
+            ? (highestPrice = price[i])
+            : (highestPrice = price[i]);
+          break;
         }
 
         // * Title

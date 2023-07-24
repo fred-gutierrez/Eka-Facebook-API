@@ -5,120 +5,113 @@ import axios from "axios";
 
 dotenv.config();
 
+const postsDataFilePath = "./src/data/postsData.json";
+const imagesFolderPath = "./images";
+
 let existingData = [];
 try {
-  existingData = JSON.parse(fs.readFileSync("./src/data/postsData.json"));
+  existingData = JSON.parse(fs.readFileSync(postsDataFilePath));
 } catch (err) {
   console.warn("No existing data found.");
 }
 
-if (!fs.existsSync("./images")) {
-  fs.mkdirSync("./images");
+if (!fs.existsSync(imagesFolderPath)) {
+  fs.mkdirSync(imagesFolderPath);
 }
 
+const downloadImage = async (imageUrl, postID) => {
+  try {
+    const filename = imageUrl.substring(
+      imageUrl.lastIndexOf("/") + 1,
+      imageUrl.lastIndexOf("?")
+    );
+    const folderPath = `./public/images/${postID}/`;
+    const imagePath = `./public/images/${postID}/${filename}`;
+    const imagePathPublic = `./images/${postID}/${filename}`;
+
+    if (!fs.existsSync(folderPath)) {
+      fs.mkdirSync(folderPath, { recursive: true });
+    }
+
+    if (!fs.existsSync(imagePath)) {
+      const imageData = await download(imageUrl);
+      fs.writeFileSync(imagePath, imageData);
+      console.log(`Image saved to ${imagePath}`);
+    } else {
+      console.log(`Image ${imagePath} already exists. Skipping download.`);
+    }
+
+    return imagePathPublic;
+  } catch (err) {
+    console.error(`Error saving image: ${err}`);
+    return null;
+  }
+};
+
 const fetchData = async () => {
-  await fetch(
+  const data = await fetch(
     `https://graph.facebook.com/me?fields=posts{message,attachments{subattachments{media{image{src}}}}}&access_token=${process.env.FACEBOOK_ACCESS_TOKEN}`
-  )
-    .then((res) => res.json())
-    .then((data) => {
-      const newPosts = [];
-      data.posts?.data?.forEach((post) => {
-        const existingPost = existingData.find(
-          (p) => p.id === post.id || p.message === post.message
-        );
-        if (existingPost) {
-          Object.assign(existingPost, post);
-        } else {
-          newPosts.unshift(post);
-        }
+  ).then((res) => res.json());
 
-        // * Modify the post's attachments
-        const postAttachments = post.attachments;
-        if (postAttachments && postAttachments.data.length > 0) {
-          postAttachments.data.forEach((attachment) => {
-            const postSubAttachments = attachment.subattachments;
-            if (postSubAttachments && postSubAttachments.data.length > 0) {
-              const slicedSubAttachments = postSubAttachments.data.slice(0, 5);
-              slicedSubAttachments.forEach(async (subAttachment) => {
-                if (subAttachment.media && subAttachment.media.image) {
-                  subAttachment.media.image.src =
-                    subAttachment.media.image.src.replace(
-                      /^http:\/\//i,
-                      "https://"
-                    );
+  const newPosts = [];
+  for (const post of data.posts?.data || []) {
+    const existingPost = existingData.find(
+      (p) => p.id === post.id || p.message === post.message
+    );
 
-                  // * Download Image
-                  const imageUrl = subAttachment.media.image.src;
-                  const filename = imageUrl.substring(
-                    imageUrl.lastIndexOf("/") + 1,
-                    imageUrl.lastIndexOf("?")
-                  );
-                  const folderPath = `./public/images/${post.id}/`;
-                  if (!fs.existsSync(folderPath)) {
-                    fs.mkdirSync(folderPath, { recursive: true });
-                  }
-                  const imagePath = `./public/images/${post.id}/${filename}`;
-                  const imagePathPublic = `./images/${post.id}/${filename}`;
+    if (existingPost) {
+      Object.assign(existingPost, post);
+    } else {
+      newPosts.unshift(post);
+    }
 
-                  if (!fs.existsSync(imagePath)) {
-                    await download(imageUrl).then((data) => {
-                      fs.writeFileSync(imagePath, data);
-                    });
-                  } else {
-                    console.log(
-                      `Image ${imagePath} already exists. Skipping download.`
-                    );
-                  }
-                  // TODO: When the images are downloaded, the .json should be updated immediately (Not having to run it twice)
+    const postAttachments = post.attachments;
+    if (postAttachments && postAttachments.data.length > 0) {
+      for (const attachment of postAttachments.data) {
+        const postSubAttachments = attachment.subattachments;
+        if (postSubAttachments && postSubAttachments.data.length > 0) {
+          const slicedSubAttachments = postSubAttachments.data.slice(0, 5);
+          for (const subAttachment of slicedSubAttachments) {
+            if (subAttachment.media && subAttachment.media.image) {
+              subAttachment.media.image.src =
+                subAttachment.media.image.src.replace(
+                  /^http:\/\//i,
+                  "https://"
+                );
 
-                  subAttachment.media.image.src = imagePathPublic;
+              const imagePathPublic = await downloadImage(
+                subAttachment.media.image.src,
+                post.id
+              );
 
-                  const image = await axios({
-                    method: "get",
-                    url: imageUrl,
-                    responseType: "stream",
-                  });
-
-                  const writer = fs.createWriteStream(imagePath);
-                  image.data.pipe(writer);
-
-                  writer.on("finish", () => {
-                    console.log(`Image saved to ${imagePath}`);
-                  });
-
-                  writer.on("error", (err) => {
-                    console.error(`Error saving image: ${err}`);
-                  });
-                }
-              });
-              postSubAttachments.data = slicedSubAttachments;
+              if (imagePathPublic) {
+                subAttachment.media.image.src = imagePathPublic;
+              }
             }
-          });
+          }
+          postSubAttachments.data = slicedSubAttachments;
         }
-      });
-
-      const filteredData = Object.values([...newPosts, ...existingData]).filter(
-        (post) => {
-          const words = post.message?.split(" ");
-          return words?.length >= 15;
-        }
-      );
-      if (filteredData.length > 0) {
-        fs.writeFileSync(
-          "./src/data/postsData.json",
-          JSON.stringify(filteredData)
-        );
-        console.log(
-          `Wrote ${newPosts.length} new posts and updated ${
-            existingData.length - newPosts.length
-          } existing posts.`
-        );
-      } else {
-        console.error("Error: No data found in response");
       }
-    })
-    .catch((error) => console.error(error));
+    }
+  }
+
+  const filteredData = Object.values([...newPosts, ...existingData]).filter(
+    (post) => {
+      const words = post.message?.split(" ");
+      return words?.length >= 15;
+    }
+  );
+
+  if (filteredData.length > 0) {
+    fs.writeFileSync(postsDataFilePath, JSON.stringify(filteredData));
+    console.log(
+      `Wrote ${newPosts.length} new posts and updated ${
+        existingData.length - newPosts.length
+      } existing posts.`
+    );
+  } else {
+    console.error("Error: No data found in response");
+  }
 };
 
 fetchData();
