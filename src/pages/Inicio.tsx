@@ -6,7 +6,7 @@ import RecentlyAdded from "../components/Propiedades/RecentlyAddedTEST";
 export default function Inicio() {
   return (
     <>
-      <Header postData={postData} />
+      <Header />
       {/* <RecentlyAdded postData={postData} /> */}
       <RecentlyAdded postData={postData} />
     </>

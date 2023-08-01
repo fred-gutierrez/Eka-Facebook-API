@@ -8,7 +8,7 @@ export default function Footer() {
       <div className="md:flex md:justify-between">
         <div className="mb-6 md:mb-0 flex">
           <a href="/">
-            <img src={EkaLogo} className="h-30 ml-3 w-auto" alt="Eka Logo" />
+            <img src={EkaLogo} className="h-24 ml-3 w-auto" alt="Eka Logo" />
           </a>
         </div>
         <div className="grid grid-cols-2 gap-8 sm:gap-6 sm:grid-cols-3">
