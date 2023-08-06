@@ -15,7 +15,7 @@ export default function RecentlyAddedTEST({ postData }: Props) {
 
   return (
     <>
-      <h1 className="text-center text-3xl font-bold mb-10">¡Lo Ultimo!</h1>
+      <h1 className="text-center text-3xl font-bold mb-10">¡Lo ultimo!</h1>
       <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
         {filteredPosts.map((post, index) => {
           // * Price
