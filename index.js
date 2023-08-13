@@ -1,7 +1,6 @@
 import dotenv from "dotenv";
 import fs from "fs";
 import download from "download";
-import axios from "axios";
 
 dotenv.config();
 
