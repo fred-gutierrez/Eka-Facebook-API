@@ -21,7 +21,12 @@ TypeScript is employed throughout the project to add static typing to the JavaSc
 ### 5. Tailwind CSS for Styling
 Tailwind CSS is used as the styling framework for the project. It offers a utility-first approach to styling, making it easier to build responsive and visually appealing UI components without the need to write custom CSS from scratch.
 
-## Additional Notes:
+## Sketches
+Home Page             |  Properties Page
+:-------------------------:|:-------------------------:
+![Inicio Page - Eka](https://github.com/fred-gutierrez/Eka-Facebook-API/assets/81400463/fb16307c-eac9-4d86-a518-8e3be5b2ede5)  |    ![Eka Bienes Raíces](https://github.com/fred-gutierrez/Eka-Facebook-API/assets/81400463/b241e4c1-5f26-4f02-9c0c-a1e50037593b)
+
+## Additional Notes
 - postsData.json and the .env file are missing from the repository because they contain PII/API keys. To keep this project public and the client safe, those elements were removed from this repository.
 
 Thank you for your interest in the Eka Bienes Raices project! If you have any questions or feedback, please don't hesitate to reach out. Happy coding!
