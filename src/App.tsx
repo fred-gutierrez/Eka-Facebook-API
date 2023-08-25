@@ -4,8 +4,11 @@ import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
 import Inicio from "./pages/Inicio";
 import Propiedades from "./pages/Propiedades";
+import animations from "./components/animations";
 
 function App() {
+  animations();
+
   return (
     <div className="silver">
       <Navbar />
