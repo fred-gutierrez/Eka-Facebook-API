@@ -10,7 +10,7 @@ const animations = () => {
     }
     didAnimate.current = true;
     gsap.from(".header-elements", {
-      duration: 1.2,
+      duration: 1.5,
       opacity: 0,
       y: 300,
       stagger: 0.15,
