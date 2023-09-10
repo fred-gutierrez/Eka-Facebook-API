@@ -1,4 +1,3 @@
-import React from "react";
 import EkaLogo from "../images/eka-logo-transparent2.png";
 
 export default function Footer() {
