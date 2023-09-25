@@ -175,7 +175,7 @@ const PostItem = ({ postData }: Props) => {
           >
             <div className="grid grid-cols-2 gap-1">
               {post.attachments.data.map(
-                (attachment: any, mainIndex: number) => {
+                (attachment: any) => {
                   const { subattachments } = attachment;
                   const mainImage =
                     subattachments?.data?.[0]?.media?.image?.src;
