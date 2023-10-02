@@ -11,7 +11,7 @@ const PostItem = ({ postData }: Props) => {
       {postData.map((post: Post, index: number) => {
         // * Price
         const priceMatch: RegExpMatchArray | null = post.message.match(
-          /(\$|₡|¢)\d{1,4}(,\d{3})*(\.\d{3})*(\.\d+)?\s*(mil(?=[\s,]|$))?/g
+          /(\$|₡|¢)\d{1,4}(,\d{3})*(\.\d{3})*(\.\d+)?\s*(mil(?=[\s,]|$))?/g,
         );
 
         const price: string[] = priceMatch
@@ -45,7 +45,7 @@ const PostItem = ({ postData }: Props) => {
 
         // * Alquiler o Venta
         const alquilerVentaMatch = post.message.match(
-          /(alquil[oó]|alquiler|vendo|venta)/i
+          /(alquil[oó]|alquiler|vendo|venta)/i,
         );
 
         let alquilerVenta = null;
@@ -81,10 +81,10 @@ const PostItem = ({ postData }: Props) => {
         }
 
         const habitacionMatch = post.message.match(
-          /(\d+|\buna\b|\bdos\b|\btres\b)\s*(habitaci[oó]n|(?:es)|dormitorio)s?/i
+          /(\d+|\buna\b|\bdos\b|\btres\b)\s*(habitaci[oó]n|(?:es)|dormitorio)s?/i,
         );
         const banoMatch = post.message.match(
-          /(\d+)\s*(?:batería(?:s)? de\s+)?baño(?:s)?/i
+          /(\d+)\s*(?:batería(?:s)? de\s+)?baño(?:s)?/i,
         );
 
         const habitaciones = habitacionMatch
@@ -94,7 +94,7 @@ const PostItem = ({ postData }: Props) => {
 
         // * Metros cuadrados
         const metrosMatch = post.message.match(
-          /(\d+(?:\.\d+)?)\s*(?=m²|M2|metros\s+cuadrados|mts|de terreno|de construcci[oó]n|terreno)/i
+          /(\d+(?:\.\d+)?)\s*(?=m²|M2|metros\s+cuadrados|mts|de terreno|de construcci[oó]n|terreno)/i,
         );
         const metros = metrosMatch ? parseFloat(metrosMatch[1]) : 0;
 
@@ -102,16 +102,10 @@ const PostItem = ({ postData }: Props) => {
         const propertiesArray =
           post.message
             .match(
-              /\b(residencial|lote|bodega|casa|apartamento|terreno|local)\b/gi
+              /\b(residencial|lote|bodega|casa|apartamento|terreno|local)\b/gi,
             )
             ?.map((word) => word.charAt(0).toUpperCase() + word.slice(1)) || [];
-        const propertyType = [
-          ...new Set(
-            propertiesArray.includes("Residencial")
-              ? ["Residencial"]
-              : [propertiesArray[0]]
-          ),
-        ];
+        const propertyType = [...new Set([propertiesArray[0]])];
 
         const interiorDetails: Interior[] = [
           {
@@ -129,7 +123,7 @@ const PostItem = ({ postData }: Props) => {
           {
             ifStatement: metros >= 45 ? metros : false,
             icon: "map",
-            desc: "m²",
+            desc: "m2",
             display: metros,
           },
         ];
@@ -143,6 +137,7 @@ const PostItem = ({ postData }: Props) => {
             propType: "Terreno",
             icon: "mountain-sun",
           },
+          { propType: "Lote", icon: "panorama" },
           {
             propType: "Casa",
             icon: "house-chimney",
@@ -174,36 +169,34 @@ const PostItem = ({ postData }: Props) => {
             xl:mx-auto rounded-xl`}
           >
             <div className="grid grid-cols-2 gap-1">
-              {post.attachments.data.map(
-                (attachment: any) => {
-                  const { subattachments } = attachment;
-                  const mainImage =
-                    subattachments?.data?.[0]?.media?.image?.src;
+              {post.attachments.data.map((attachment: any) => {
+                const { subattachments } = attachment;
+                const mainImage = subattachments?.data?.[0]?.media?.image?.src;
 
-                  return (
-                    <>
-                      <img
-                        src={mainImage}
-                        alt={`Facebook post main image`}
-                        className={`h-52 min-w-full min-h-full object-cover rounded-lg`}
-                      />
-                      <div className="grid grid-cols-2 gap-1">
-                        {subattachments.data
-                          .slice(1, 5)
-                          .map((subattachment: any) => (
-                            <img
-                              src={subattachment.media.image.src}
-                              alt={`Facebook post image ${index}`}
-                              className={`h-28 md:h-40 2xl:h-44 lg:h-40
+                return (
+                  <>
+                    <img
+                      src={mainImage}
+                      alt={`Facebook post main image`}
+                      className={`h-52 min-w-full min-h-full object-cover rounded-lg`}
+                    />
+                    <div className="grid grid-cols-2 gap-1">
+                      {subattachments.data
+                        .slice(1, 5)
+                        .map((subattachment: any) => (
+                          <img
+                            src={subattachment.media.image.src}
+                            alt={`Facebook post image ${index}`}
+                            className={`h-28 md:h-40 2xl:h-44 lg:h-40
                           min-w-full rounded-lg object-cover mx-auto`}
-                            />
-                          ))}
-                      </div>
-                    </>
-                  );
-                }
-              )}
+                          />
+                        ))}
+                    </div>
+                  </>
+                );
+              })}
             </div>
+            {/* // TODO: Create Carousel showcasing other images when clicked */}
             <div>
               <div className="mt-4 md:ml-5 grid grid-cols-2">
                 <h1 className={`text-lg md:text-xl`}>{title}</h1>
@@ -244,7 +237,7 @@ const PostItem = ({ postData }: Props) => {
                           {intDetails.desc}
                         </span>
                       </div>
-                    ) : null
+                    ) : null,
                   )}
                   {propertiesType.map(
                     (property) =>
@@ -257,7 +250,7 @@ const PostItem = ({ postData }: Props) => {
                           />
                           <span>{property.propType}</span>
                         </div>
-                      )
+                      ),
                   )}
                 </div>
                 <div className="text-center">

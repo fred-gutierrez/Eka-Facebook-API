@@ -116,13 +116,7 @@ export default function RecentlyAdded({ postData }: Props) {
               )
               ?.map((word) => word.charAt(0).toUpperCase() + word.slice(1)) ||
             [];
-          const propertyType = [
-            ...new Set(
-              propertiesArray.includes("Residencial")
-                ? ["Residencial"]
-                : [propertiesArray[0]],
-            ),
-          ];
+          const propertyType = [...new Set([propertiesArray[0]])];
 
           const interiorDetails: Interior[] = [
             {
@@ -154,6 +148,7 @@ export default function RecentlyAdded({ postData }: Props) {
               propType: "Terreno",
               icon: "mountain-sun",
             },
+            { propType: "Lote", icon: "panorama" },
             {
               propType: "Casa",
               icon: "house-chimney",
