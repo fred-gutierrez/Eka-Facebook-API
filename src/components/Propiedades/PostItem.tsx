@@ -129,7 +129,7 @@ const PostItem = ({ postData }: Props) => {
           {
             ifStatement: metros >= 45 ? metros : false,
             icon: "map",
-            desc: "m2",
+            desc: "m²",
             display: metros,
           },
         ];
@@ -204,7 +204,6 @@ const PostItem = ({ postData }: Props) => {
                 }
               )}
             </div>
-            {/* // TODO: Create Carousel showcasing other images when clicked */}
             <div>
               <div className="mt-4 md:ml-5 grid grid-cols-2">
                 <h1 className={`text-lg md:text-xl`}>{title}</h1>
