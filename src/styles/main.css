@@ -11,6 +11,14 @@ body {
   -webkit-text-fill-color: transparent;
 }
 
+#recently-added-header-text {
+  color: #000000;
+  background-image: -webkit-linear-gradient(315deg, #000000 0%, #8bc34a 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
 .silver {
   background-color: #fafafa;
 }
@@ -25,4 +33,6 @@ body {
 
 .h-30 {
   height: 7rem;
-}/*# sourceMappingURL=main.css.map */
+}
+
+/*# sourceMappingURL=main.css.map */

@@ -22,7 +22,7 @@ const downloadImage = async (imageUrl, postID) => {
   try {
     const filename = imageUrl.substring(
       imageUrl.lastIndexOf("/") + 1,
-      imageUrl.lastIndexOf("?")
+      imageUrl.lastIndexOf("?"),
     );
     const folderPath = `./public/images/${postID}/`;
     const imagePath = `./public/images/${postID}/${filename}`;
@@ -49,17 +49,18 @@ const downloadImage = async (imageUrl, postID) => {
 
 const fetchData = async () => {
   const data = await fetch(
-    `https://graph.facebook.com/me?fields=posts{message,attachments{subattachments{media{image{src}}}}}&access_token=${process.env.FACEBOOK_ACCESS_TOKEN}`
+    `https://graph.facebook.com/me?fields=posts{message,attachments{subattachments{media{image{src}}}}}&access_token=${process.env.FACEBOOK_ACCESS_TOKEN}`,
   ).then((res) => res.json());
 
   const newPosts = [];
   for (const post of data.posts?.data || []) {
     const existingPost = existingData.find(
-      (p) => p.id === post.id || p.message === post.message
+      (p) => p.id === post.id || p.message === post.message,
     );
 
     if (existingPost) {
-      Object.assign(existingPost, post);
+      // Object.assign(existingPost, post);
+      console.log(`Duplicated post with message: ${post.message}. Skipping.`);
     } else {
       newPosts.unshift(post);
     }
@@ -75,12 +76,12 @@ const fetchData = async () => {
               subAttachment.media.image.src =
                 subAttachment.media.image.src.replace(
                   /^http:\/\//i,
-                  "https://"
+                  "https://",
                 );
 
               const imagePathPublic = await downloadImage(
                 subAttachment.media.image.src,
-                post.id
+                post.id,
               );
 
               if (imagePathPublic) {
@@ -98,7 +99,7 @@ const fetchData = async () => {
     (post) => {
       const words = post.message?.split(" ");
       return words?.length >= 15;
-    }
+    },
   );
 
   if (filteredData.length > 0) {
@@ -106,7 +107,7 @@ const fetchData = async () => {
     console.log(
       `Wrote ${newPosts.length} new posts and updated ${
         existingData.length - newPosts.length
-      } existing posts.`
+      } existing posts.`,
     );
   } else {
     console.error("Error: No data found in response");

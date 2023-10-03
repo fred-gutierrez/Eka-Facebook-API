@@ -1,4 +1,4 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Interior, Post, Property } from "../../types/postTypes";
 import ImageCarousel from "../Systems/ImageCarousel";
 
@@ -124,7 +124,7 @@ const PostItem = ({ postData }: Props) => {
           {
             ifStatement: metros >= 45 ? metros : false,
             icon: "map",
-            desc: "m2",
+            desc: "m²",
             display: metros,
           },
         ];
@@ -166,8 +166,9 @@ const PostItem = ({ postData }: Props) => {
             shadow-lg shadow-gray-200
             items-center
             mb-6 md:mb-6 py-8 md:py-6 px-5 mx-5
-            max-w-screen-xl md:grid md:grid-cols-2
-            xl:mx-auto rounded-xl`}
+            max-w-screen-lg 
+            md:grid md:grid-cols-2
+            lg:mx-auto rounded-xl`}
           >
             <div>
               {post.attachments.data.map((attachment: any) => {
@@ -178,63 +179,54 @@ const PostItem = ({ postData }: Props) => {
                 return <ImageCarousel images={allImages} />;
               })}
             </div>
-            <div>
-              <div className="mt-4 md:ml-5 grid grid-cols-2">
-                <h1 className={`text-lg md:text-xl`}>{title}</h1>
-                <div className="mx-auto">
-                  <h1 className={`text-xl sm:text-2xl font-bold`}>
-                    {highestPrice}
-                  </h1>
-                  <h1 className={`text-lg text-center font-light`}>
-                    {alquilerVenta}
-                  </h1>
-                </div>
+            <div className="md:pl-5">
+              <div className="flex items-center pt-5 md:pt-0">
+                <h1 className={`text-2xl sm:text-3xl font-bold`}>
+                  {highestPrice}
+                </h1>
+                <p className={`ml-2 text-lg text-center font-light`}>
+                  - En {alquilerVenta}
+                </p>
               </div>
-              {locationString && (
-                <div className="mt-4 md:ml-5 flex items-center">
-                  <FontAwesomeIcon
-                    className="mr-2 text-red-500"
-                    icon={["fas", `location-dot`]}
-                    size="sm"
-                  />
-                  <h1 className={`text-lg font-light`}>{locationString}</h1>
-                </div>
-              )}
-              <div className="mt-4 md:ml-5 grid grid-cols-2">
-                <div>
-                  {interiorDetails.map((intDetails) =>
-                    intDetails.ifStatement ? (
-                      <div className="flex items-center my-1">
-                        <FontAwesomeIcon
-                          className="mr-1 text-gray-800"
-                          icon={[
-                            intDetails.ifStatement === metros ? "far" : "fas",
-                            intDetails.icon,
-                          ]}
-                          size="lg"
-                        />
-                        <span>
+              <h1 className={`text-lg md:text-xl pt-2`}>{title}</h1>
+              <div className="py-3">
+                {interiorDetails.map((intDetails) =>
+                  intDetails.ifStatement ? (
+                    <div className="inline-flex items-center mr-3">
+                      <i
+                        className={`fa-light fa-${intDetails.icon} mr-1 text-gray-800`}
+                      ></i>
+                      <div>
+                        <span className="font-semibold">
                           {intDetails.display}
-                          {intDetails.desc}
                         </span>
+                        {intDetails.desc}
                       </div>
-                    ) : null,
-                  )}
-                  {propertiesType.map(
-                    (property) =>
-                      propertyType.includes(property.propType) && (
-                        <div className="flex items-center my-1">
-                          <FontAwesomeIcon
-                            className="mr-1 text-gray-800"
-                            icon={["fas", property.icon]}
-                            size="lg"
-                          />
-                          <span>{property.propType}</span>
-                        </div>
-                      ),
-                  )}
-                </div>
-                <div className="text-center">
+                    </div>
+                  ) : null,
+                )}
+                {propertiesType.map(
+                  (property) =>
+                    propertyType.includes(property.propType) && (
+                      <div className="inline-flex items-center">
+                        <i
+                          className={`fa-light fa-${property.icon} text-gray-800 mr-1`}
+                        ></i>
+                        <span>{property.propType}</span>
+                      </div>
+                    ),
+                )}
+              </div>
+              <div>
+                {locationString && (
+                  <div className="flex items-center pb-4">
+                    <i
+                      className={`fa-solid fa-location-dot mr-2 text-red-500`}
+                    ></i>
+                    <h1 className={`text-lg font-light`}>{locationString}</h1>
+                  </div>
+                )}
+                <div className="w-full">
                   <a
                     href={`https://www.facebook.com/BienesRaicesEka/posts/${post.id}`}
                     target={"_blank"}
@@ -242,7 +234,7 @@ const PostItem = ({ postData }: Props) => {
                     <button
                       className={`bg-orange-500 hover:bg-orange-400 text-white 
                 font-bold py-2 px-4 border-b-4 border-orange-700 hover:border-orange-500 
-                rounded w-32 hover:animate-pulse`}
+                rounded  hover:animate-pulse w-full md:w-36`}
                     >
                       Ver Detalles
                     </button>

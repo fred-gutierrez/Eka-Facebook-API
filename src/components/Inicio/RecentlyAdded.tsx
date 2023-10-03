@@ -29,7 +29,10 @@ export default function RecentlyAdded({ postData }: Props) {
 
   return (
     <>
-      <h1 className="text-center mb-10 sm:text-4xl md:leading-tight text-3xl font-bold md:font-medium">
+      <h1
+        id="recently-added-header-text"
+        className="text-center mb-10 sm:text-4xl md:leading-tight text-3xl font-bold md:font-medium"
+      >
         ¡Lo ultimo!
       </h1>
       <ul className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
@@ -69,12 +72,22 @@ export default function RecentlyAdded({ postData }: Props) {
             /(alquil[oó]|alquiler|vendo|venta)/i,
           );
 
-          const alquilerVenta = alquilerVentaMatch
-            ? alquilerVentaMatch[1].toLowerCase() === "alquilo" ||
-              alquilerVentaMatch[1].toLowerCase() === "alquiló"
-              ? "Alquiler"
-              : "Venta"
-            : null;
+          let alquilerVenta = null;
+
+          if (alquilerVentaMatch) {
+            const matchValue = alquilerVentaMatch[1].toLowerCase();
+            switch (matchValue) {
+              case "alquilo":
+              case "alquiló":
+              case "alquiler":
+                alquilerVenta = "Alquiler";
+                break;
+              case "vendo":
+              case "venta":
+                alquilerVenta = "Venta";
+                break;
+            }
+          }
 
           // * Baños and Habitaciones
           function parseSpanishNumber(numberString: string) {
@@ -184,7 +197,7 @@ export default function RecentlyAdded({ postData }: Props) {
                 shadow-lg shadow-gray-200
                 items-center
                 mb-6 py-8 px-5 mx-5
-                max-w-screen-xl rounded-xl`}
+                max-w-screen-sm rounded-xl`}
                 >
                   <div>
                     {post.attachments.data.map((attachment: any) => {
@@ -196,74 +209,63 @@ export default function RecentlyAdded({ postData }: Props) {
                     })}
                   </div>
                   <div>
-                    <div className="mt-4 md:ml-5 grid grid-cols-2">
-                      <h1 className={`text-lg md:text-xl`}>{title}</h1>
-                      <div className="mx-auto">
-                        <h1 className={`text-xl sm:text-2xl font-bold`}>
-                          {highestPrice}
-                        </h1>
-                        <h1 className={`text-lg text-center font-light`}>
-                          {alquilerVenta}
-                        </h1>
-                      </div>
+                    <div className="flex items-center pt-5">
+                      <h1 className={`text-2xl sm:text-3xl font-bold`}>
+                        {highestPrice}
+                      </h1>
+                      <p className={`ml-2 text-lg text-center font-light`}>
+                        - En {alquilerVenta}
+                      </p>
                     </div>
-                    {locationString && (
-                      <div className="mt-4 md:ml-5 flex items-center">
-                        <FontAwesomeIcon
-                          className="mr-2 text-red-500"
-                          icon={["fas", `location-dot`]}
-                          size="sm"
-                        />
-                        <h1 className={`text-lg font-light`}>
-                          {locationString}
-                        </h1>
-                      </div>
-                    )}
-                    <div className="mt-4 md:ml-5 grid grid-cols-2">
-                      <div>
-                        {interiorDetails.map((intDetails) =>
-                          intDetails.ifStatement ? (
-                            <div className="flex items-center my-1">
-                              <FontAwesomeIcon
-                                className="mr-1 text-gray-800"
-                                icon={[
-                                  intDetails.ifStatement === metros
-                                    ? "far"
-                                    : "fas",
-                                  intDetails.icon,
-                                ]}
-                                size="lg"
-                              />
-                              <span>
+                    <h1 className={`text-lg md:text-xl pt-2`}>{title}</h1>
+                    <div className="py-3">
+                      {interiorDetails.map((intDetails) =>
+                        intDetails.ifStatement ? (
+                          <div className="inline-flex items-center mr-3">
+                            <i
+                              className={`fa-light fa-${intDetails.icon} mr-1 text-gray-800`}
+                            ></i>
+                            <div>
+                              <span className="font-semibold">
                                 {intDetails.display}
-                                {intDetails.desc}
                               </span>
+                              {intDetails.desc}
                             </div>
-                          ) : null,
-                        )}
-                        {propertiesType.map(
-                          (property) =>
-                            propertyType.includes(property.propType) && (
-                              <div className="flex items-center my-1">
-                                <FontAwesomeIcon
-                                  className="mr-1 text-gray-800"
-                                  icon={["fas", property.icon]}
-                                  size="lg"
-                                />
-                                <span>{property.propType}</span>
-                              </div>
-                            ),
-                        )}
-                      </div>
-                      <div className="text-center">
+                          </div>
+                        ) : null,
+                      )}
+                      {propertiesType.map(
+                        (property) =>
+                          propertyType.includes(property.propType) && (
+                            <div className="inline-flex items-center">
+                              <i
+                                className={`fa-light fa-${property.icon} text-gray-800 mr-1`}
+                              ></i>
+                              <span>{property.propType}</span>
+                            </div>
+                          ),
+                      )}
+                    </div>
+                    <div>
+                      {locationString && (
+                        <div className="flex items-center pb-4">
+                          <i
+                            className={`fa-solid fa-location-dot mr-2 text-red-500`}
+                          ></i>
+                          <h1 className={`text-lg font-light`}>
+                            {locationString}
+                          </h1>
+                        </div>
+                      )}
+                      <div className="w-full">
                         <a
                           href={`https://www.facebook.com/BienesRaicesEka/posts/${post.id}`}
                           target={"_blank"}
                         >
                           <button
                             className={`bg-orange-500 hover:bg-orange-400 text-white 
-              font-bold py-2 px-4 border-b-4 border-orange-700 hover:border-orange-500 
-              rounded w-32 hover:animate-pulse`}
+                font-bold py-2 px-4 border-b-4 border-orange-700 hover:border-orange-500 
+                rounded  hover:animate-pulse w-full`}
                           >
                             Ver Detalles
                           </button>
