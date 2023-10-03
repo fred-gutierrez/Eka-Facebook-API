@@ -14,7 +14,7 @@ The Realtor's Properties Display Webpage is designed to streamline the process o
 2. **Eye-catching Image Carousel** - We've implemented an Image Carousel to showcase the Realtor's properties in a visually captivating way. This dynamic carousel leaves a lasting impression on the visitors, making property browsing an engaging experience.
 3. **NodeJS Backend** - NodeJS is used to create a robust backend that handles the interaction with the Facebook Graph API. The backend is responsible for fetching and filtering the relevant data from the API, ensuring that only the Realtor's property-related posts are displayed on the webpage. 
 5. **TypeScript for Maintainability** - TypeScript is employed throughout the project to add static typing to the JavaScript codebase. This helps catch potential errors during development, makes the codebase more maintainable.
-6. **Tailwind CSS for Styling** - Tailwind CSS is used as the styling framework for the project, ensuring a sleek and modern design that complements the beautiful property images in the carousel.
+6. **Tailwind CSS for Styling** - Tailwind CSS is used as the styling framework for the project, ensuring a sleek and modern design.
 
 ## Sketches
 Home Page             |  Properties Page
