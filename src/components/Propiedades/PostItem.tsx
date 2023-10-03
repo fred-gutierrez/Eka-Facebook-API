@@ -1,5 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Interior, Post, Property } from "../../types/postTypes";
+import ImageCarousel from "../Systems/ImageCarousel";
 
 interface Props {
   postData: Post[];
@@ -168,35 +169,15 @@ const PostItem = ({ postData }: Props) => {
             max-w-screen-xl md:grid md:grid-cols-2
             xl:mx-auto rounded-xl`}
           >
-            <div className="grid grid-cols-2 gap-1">
+            <div>
               {post.attachments.data.map((attachment: any) => {
-                const { subattachments } = attachment;
-                const mainImage = subattachments?.data?.[0]?.media?.image?.src;
-
-                return (
-                  <>
-                    <img
-                      src={mainImage}
-                      alt={`Facebook post main image`}
-                      className={`h-52 min-w-full min-h-full object-cover rounded-lg`}
-                    />
-                    <div className="grid grid-cols-2 gap-1">
-                      {subattachments.data
-                        .slice(1, 5)
-                        .map((subattachment: any) => (
-                          <img
-                            src={subattachment.media.image.src}
-                            alt={`Facebook post image ${index}`}
-                            className={`h-28 md:h-40 2xl:h-44 lg:h-40
-                          min-w-full rounded-lg object-cover mx-auto`}
-                          />
-                        ))}
-                    </div>
-                  </>
+                const allImages = attachment.subattachments.data.map(
+                  (subattachment: any) => subattachment.media.image.src,
                 );
+
+                return <ImageCarousel images={allImages} />;
               })}
             </div>
-            {/* // TODO: Create Carousel showcasing other images when clicked */}
             <div>
               <div className="mt-4 md:ml-5 grid grid-cols-2">
                 <h1 className={`text-lg md:text-xl`}>{title}</h1>

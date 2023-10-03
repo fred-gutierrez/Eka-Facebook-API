@@ -1,5 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Interior, Post, Property } from "../../types/postTypes";
+import ImageCarousel from "../Systems/ImageCarousel";
 
 interface Props {
   postData: Post[];
@@ -185,33 +186,13 @@ export default function RecentlyAdded({ postData }: Props) {
                 mb-6 py-8 px-5 mx-5
                 max-w-screen-xl rounded-xl`}
                 >
-                  <div className="grid grid-cols-2 gap-1">
+                  <div>
                     {post.attachments.data.map((attachment: any) => {
-                      const { subattachments } = attachment;
-                      const mainImage =
-                        subattachments?.data?.[0]?.media?.image?.src;
-
-                      return (
-                        <>
-                          <img
-                            src={mainImage}
-                            alt={`Facebook post main image`}
-                            className={`h-52 min-w-full min-h-full object-cover rounded-lg`}
-                          />
-                          <div className="grid grid-cols-2 gap-1">
-                            {subattachments.data
-                              .slice(1, 5)
-                              .map((subattachment: any) => (
-                                <img
-                                  src={subattachment.media.image.src}
-                                  alt={`Facebook post image ${index}`}
-                                  className={`h-28 
-                        min-w-full rounded-lg object-cover mx-auto`}
-                                />
-                              ))}
-                          </div>
-                        </>
+                      const allImages = attachment.subattachments.data.map(
+                        (subattachment: any) => subattachment.media.image.src,
                       );
+
+                      return <ImageCarousel images={allImages} />;
                     })}
                   </div>
                   <div>
