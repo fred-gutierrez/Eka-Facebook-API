@@ -1,4 +1,3 @@
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Interior, Post, Property } from "../../types/postTypes";
 import ImageCarousel from "../Systems/ImageCarousel";
 
