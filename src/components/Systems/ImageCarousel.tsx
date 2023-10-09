@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import gsap from "gsap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 interface ImageCarouselProps {
@@ -7,6 +8,21 @@ interface ImageCarouselProps {
 
 const ImageCarousel: React.FC<ImageCarouselProps> = ({ images }) => {
   const [currentImage, setCurrentImage] = useState(0);
+  const imageRef = useRef<HTMLImageElement>(null);
+
+  useEffect(() => {
+    const fadeInImage = () => {
+      gsap.to(imageRef.current, {
+        opacity: 1,
+        duration: 0.3,
+      });
+    };
+    gsap.to(imageRef.current, {
+      opacity: 0,
+      duration: 0.3,
+      onComplete: fadeInImage,
+    });
+  }, [currentImage, images]);
 
   const nextImage = () => {
     setCurrentImage((prevImage) => (prevImage + 1) % images.length);
